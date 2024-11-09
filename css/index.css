@@ -141,10 +141,18 @@ a{
 
 @media (max-width: 834px) {
     .conteudoLoginCadastar {
-        height: 95%;
+        height: 80%;
         flex-direction: column;
     }
 
+    .LoginCadastar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+ 
     .saudacoes h1 {
         font-size: 30px;
     }
@@ -154,5 +162,9 @@ a{
         width: 100%;
         gap: 30px;
     }
+
+  
 }
+
+
 
