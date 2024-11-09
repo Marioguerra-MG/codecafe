@@ -91,6 +91,8 @@ input{
     outline: none;
     border: none;
     border-bottom: 2px solid #a64bed;
+    font-size: 20px;
+    color: rgb(150, 150, 150);
 
 }
 
@@ -162,8 +164,6 @@ a{
         width: 100%;
         gap: 30px;
     }
-
-  
 }
 
 
