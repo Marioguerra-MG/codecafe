@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(90deg, #8d4bed, #a64bed);
+}
+
+header{
+    width: 90%;
+    margin-top: 20px;
+}
+
+#voltarIinicio{
+    color: #a64bed;
+}
+
+#logoTextoCadastro{
+    font-size: 50px;
+    font-weight: 500;
+    color: white;
+}
+
+.conteudoCadastror{
+    width: 40%;
+    height: 70%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid black ;
+    justify-content: center;
+    margin-top: 20px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+#tituloCadastrar{
+    color: #a64bed;
+    font-weight: 600;
+}
+
+.conteudoDados{
+    width: 95%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.conteudoDados div{
+    display: flex;
+    flex-direction: column;
+   
+}
+
+.conteudoDados input{
+    width: 400px;
+    height: 40px;
+    font-size: 22px;
+    outline: none;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    
+}
+
+.conteudoDados input:focus {
+    border-color: #925af8;
+    box-shadow: 0px 0px 5px rgba(146, 90, 248, 0.5);
+}
+
+label{
+    font-size: 20px;
+    color: rgb(150, 150, 150);
+}
+
+#btnCadastrar{
+    width: 75%;
+    height: 50px;
+    border-radius: 8px;
+    border: none;
+    background-color: #5c05ff;
+    cursor: pointer;
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+    transition: background-color 0.5s ease;
+}
+
+#btnCadastrar:hover{
+    background-color: #4900cf;
+
+}
+
+@media (max-width: 1040px) {
+
+    header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .conteudoCadastror{
+        width:60%;
+        height: 80%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 10px;
+        border: 1px solid black ;
+        justify-content: center;
+        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+    }
+
+}
+
+@media (max-width: 720px) {
+
+    .conteudoCadastror{
+        width: 90%;
+    }
+
+ 
+
+    label{
+        font-size: 18px;
+    }
+
+
+}
+
+@media (max-width: 520px) {
+
+    .conteudoCadastror{
+        width: 90%;
+    }
+
+    .conteudoDados input{
+        width:250px;
+        height: 40px;
+        font-size:17px;
+    }
+
+    label{
+        font-size: 18px;
+    }
+
+
+}
+

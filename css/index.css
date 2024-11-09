@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(90deg, #8d4bed, #a64bed);
+}
+
+.conteudoLoginCadastar{
+    width: 70%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background-color: #5c05ff;
+    border-radius: 15px;
+    justify-content: space-between;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.telaLogo{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#logoTexto{
+    font-size: 50px;
+    font-weight: 500;
+    color: white;
+}
+
+
+.LoginCadastar{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    gap: 60px;
+
+   
+}
+
+.saudacoes{
+    width: 85%;
+    height: auto;
+    margin-top: 25px;
+}
+
+.saudacoes h1{
+    color: #a64bed;
+    font-size: 40px;    
+}
+
+.dadosDeLogin{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#nomeUsuario #senhaUsuario{
+    display: flex;
+    flex-direction: column;
+
+}
+
+input{    
+    width: 400px;
+    height: 40px;
+    font-size: 22px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #a64bed;
+
+}
+
+
+
+.dadosDeLogin button{    
+    width: 80%;
+    height: 50px;
+    border: none;
+    background-color: #5c05ff;
+    font-weight: 500;
+    border-radius: 5px;
+    color: white;
+    font-size: 25px;
+}
+
+.criarContaSenha{
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#entrar{
+    cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+}
+
+.criarContaSenha a {
+    text-decoration: none;
+    color: #5c05ff;
+    cursor: pointer;
+}
+
+@media (max-width: 1045px) {
+    .conteudoLoginCadastar {
+        width: 90%;
+    }
+
+    input{
+        width: 80%;
+    }
+
+}
+
+@media (max-width: 834px) {
+    .conteudoLoginCadastar {
+        height: 95%;
+        flex-direction: column;
+    }
+
+    .saudacoes h1 {
+        font-size: 30px;
+    }
+
+    .telaLogo,
+    .LoginCadastar {
+        width: 100%;
+        gap: 30px;
+    }
+}
+
