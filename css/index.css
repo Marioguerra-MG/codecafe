@@ -86,14 +86,13 @@ body{
 
 input{    
     width: 400px;
-    height: 40px;
+    height: 30px;
     font-size: 22px;
     outline: none;
     border: none;
     border-bottom: 2px solid #a64bed;
-    font-size: 20px;
+    font-size: 15px;
     color: rgb(150, 150, 150);
-
 }
 
 

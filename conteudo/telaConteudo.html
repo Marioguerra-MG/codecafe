@@ -15,52 +15,6 @@
     <ul id="tarefa-lista"></ul>
 
 
-
-
-
-
-
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-
-    <script>
-      
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-          apiKey: "AIzaSyAkDa1oHvAF3P8rRFFHNnJ11DRNXy7M3l8",
-          authDomain: "bancodados01-2e6d9.firebaseapp.com",
-          projectId: "bancodados01-2e6d9",
-          storageBucket: "bancodados01-2e6d9.appspot.com",
-          messagingSenderId: "350816608484",
-          appId: "1:350816608484:web:25d9cc47606b63c89d0cf1"
-        };
-      
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-
-        const auth = firebase.auth();
-
-        const provider = new firebase.auth.GoogleAuthProvider();
-
-        const db = firebase.firestore();
-        
-
-        /*setTimeout(function(){
-
-            //auth.signInWithPopup(provider);
-
-        },3000)
-
-        auth.onAuthStateChanged((val)=>{
-            if(val){
-                alert("Logado com sucesso"+ val.displayName);
-                console.log(val);
-            }
-        })*/
-      </script>
-
       <script src="/js/index.js"></script>
 </body>
 </html>
