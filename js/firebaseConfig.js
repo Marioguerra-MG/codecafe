@@ -48,7 +48,7 @@ document.getElementById('btnCadastrar').addEventListener('click', async () => {
         // Salvar dados do usuário no Firestore
         await setDoc(doc(db, "usuarios", userCredential.user.uid), {
             email: email,
-            nome: nome,
+            usuario: nome,
             criadoEm: new Date()
         });
 

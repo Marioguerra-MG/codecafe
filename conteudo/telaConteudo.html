@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/telaConteudo.css">
     <title>CodeCafé conteudo</title>
 </head>
 <body>
 
-    <form>
-        <input type="text" name="tarefa"/>
-        <input type="submit"> 
-    </form>
+    <div class="informacoesUsuario">
+        <h1>ola</h1>
+    </div>
 
-    <ul id="tarefa-lista"></ul>
+
+    <div class="conteudoCorpo">
+        <form>
+            <input id="CampoConversa" type="text" name="tarefa"/>
+            <input id="enviarMensagam" type="submit"> 
+        </form>
+
+        <ul id="tarefa-lista"></ul>
+
+    </div>
 
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>

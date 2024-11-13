@@ -23,17 +23,27 @@ const tarefaLista = document.getElementById('tarefa-lista');
 // Função para adicionar tarefa ao Firestore
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    let tarefa = document.querySelector('[name=tarefa]').value;
+    const tarefa = document.querySelector('[name=tarefa]').value;
 
-    try {
-        // Usando addDoc e collection corretamente na versão modular
-        await addDoc(collection(db, 'tarefa'), {
-            tarefa: tarefa
-        });
-        alert('Tarefa cadastrada com sucesso!');
-        form.reset();
-    } catch (error) {
-        alert('Erro ao cadastrar a tarefa: ' + error.message);
+    const user = auth.currentUser;
+    
+    if (user) {
+        const nome = user.displayName; // Pega o nome do usuário autenticado
+        
+        try {
+            // Salva a tarefa com o nome do usuário
+            await addDoc(collection(db, 'tarefa'), {
+                tarefa: tarefa,
+                usuario: nome, // Salva o nome do usuário junto com a tarefa
+                criadoEm: new Date()
+            });
+            alert('Tarefa cadastrada com sucesso!');
+            form.reset();
+        } catch (error) {
+            alert('Erro ao cadastrar a tarefa: ' + error.message);
+        }
+    } else {
+        alert("Usuário não autenticado.");
     }
 });
 
@@ -41,9 +51,9 @@ form.addEventListener('submit', async (e) => {
 onSnapshot(collection(db, 'tarefa'), (snapshot) => {
     tarefaLista.innerHTML = '';  // Limpar lista antes de adicionar novas tarefas
     snapshot.forEach((doc) => {
-        let tarefa = doc.data().tarefa;
-        let li = document.createElement('li');
-        li.textContent = tarefa;
+        const data = doc.data();
+        const li = document.createElement('li');
+        li.textContent = `${data.usuario}: ${data.tarefa}`; // Exibe o nome do usuário junto com a tarefa
         tarefaLista.appendChild(li);
     });
 });
