@@ -184,4 +184,19 @@ li {
     max-width: 700px;
 }
 
+@media (max-width: 834px) {
+
+    .informacoesUsuario{
+        display: none;
+    }
+
+    .conteudoCorpo{
+        width: 95%;
+    }
+
+    #enviarMensagam{
+    display: none;
+    }
+}
+
 
