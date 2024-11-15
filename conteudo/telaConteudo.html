@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS do EmojiMart -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart/css/emoji-mart.css">
-
     <link rel="stylesheet" href="/css/telaConteudo.css">
     <title>CodeCafé - Conteúdo</title>
 </head>
@@ -16,24 +13,49 @@
             <h1 id="nomePerfil">Olá!</h1>
         </div>
 
-        <div class="conteudoPerfil">
-            <div class="amigos">
-                <h1>Amigos</h1>
+        <div class="emoticon">
+            <div id="emojiContainer">
+                <!-- Emojis visíveis diretamente -->
+                <button class="emoji" data-emoji="😂">😂</button>
+                <button class="emoji" data-emoji="❤️">❤️</button>
+                <button class="emoji" data-emoji="🥺">🥺</button>
+                <button class="emoji" data-emoji="😍">😍</button>
+                <button class="emoji" data-emoji="😭">😭</button>
+                <button class="emoji" data-emoji="😘">😘</button>
+                <button class="emoji" data-emoji="🤣">🤣</button>
+                <button class="emoji" data-emoji="😊">😊</button>
+                <button class="emoji" data-emoji="😜">😜</button>
+                <button class="emoji" data-emoji="😎">😎</button>
+                <button class="emoji" data-emoji="😏">😏</button>
+                <button class="emoji" data-emoji="💕">💕</button>
+                <button class="emoji" data-emoji="🙏">🙏</button>
+                <button class="emoji" data-emoji="💪">💪</button>
+                <button class="emoji" data-emoji="🎉">🎉</button>
+                <button class="emoji" data-emoji="🥳">🥳</button>
+                <button class="emoji" data-emoji="👏">👏</button>
+                <button class="emoji" data-emoji="🤔">🤔</button>
+                <button class="emoji" data-emoji="🐱">🐱</button>
+                <button class="emoji" data-emoji="🌹">🌹</button>
             </div>
         </div>
 
-        <div class="emoticon">
-            <h1>Emoji</h1>
-            <button id="emojiBtn">Escolher Emoji</button>
+        <div class="conteudoPerfil">
+            <div class="amigos">
+                <h1 id="comunidadesTexto">Comunidades</h1>
+                <button id="addComunidades">Adicionar</button>
+                <ul id="salas-lista"></ul>  <!-- Lista de salas -->
+            </div>
         </div>
     </div>
 
     <div class="conteudoCorpo">
+        <div class="conteinerNomeComunidade">
+            <h1 id="nomeComunidade">Brasil</h1>
+        </div>
         <form>
             <input id="CampoConversa" type="text" name="tarefa" />
             <input id="enviarMensagam" type="submit" value="Enviar" />
         </form>
-
         <ul id="tarefa-lista"></ul>
     </div>
 
@@ -41,10 +63,20 @@
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-    <!-- JS do EmojiMart -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-mart/dist/index.min.js"></script>
     <!-- Seu arquivo de JS -->
     <script type="module" src="/js/telaConteudo.js"></script>
+
+    <script>
+        // Inserir emoji no campo de texto
+        const emojis = document.querySelectorAll('.emoji');
+        const campoConversa = document.getElementById('CampoConversa');
+
+        emojis.forEach(emoji => {
+            emoji.addEventListener('click', () => {
+                campoConversa.value += emoji.getAttribute('data-emoji'); // Adiciona o emoji ao campo de texto
+            });
+        });
+    </script>
 
 </body>
 </html>

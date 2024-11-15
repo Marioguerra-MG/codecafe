@@ -22,6 +22,8 @@ const form = document.querySelector('form');
 const tarefaLista = document.getElementById('tarefa-lista');
 const campoConversa = document.getElementById('CampoConversa');
 const nomePerfil = document.getElementById('nomePerfil');
+const salasLista = document.getElementById('salas-lista');
+const nomeComunidade = document.getElementById('nomeComunidade');
 
 // Função para exibir o nome do usuário autenticado
 auth.onAuthStateChanged(user => {
@@ -32,36 +34,71 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-// Exibir as mensagens em tempo real
-onSnapshot(collection(db, 'mensagens'), (snapshot) => {
-    tarefaLista.innerHTML = '';
+// Exibir as salas de chat em tempo real
+onSnapshot(collection(db, 'salas'), (snapshot) => {
+    salasLista.innerHTML = '';  // Limpar a lista antes de exibir novamente
     snapshot.forEach(doc => {
-        const data = doc.data();
+        const sala = doc.data();
         const li = document.createElement('li');
-        li.textContent = `${data.usuario}: ${data.mensagem}`;
-        tarefaLista.appendChild(li);
+        li.textContent = sala.nomeSala;
+        li.setAttribute('data-id', doc.id);  // Adicionar o atributo data-id
+        li.addEventListener('click', () => {
+            entrarNaSala(doc.id);  // Passa o ID da sala
+        });
+        salasLista.appendChild(li);
     });
 });
 
-// Enviar uma mensagem
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const mensagem = campoConversa.value;
-    const user = auth.currentUser;
-
-    if (user) {
-        const nome = user.displayName;
+// Criar uma nova sala de chat
+document.getElementById('addComunidades').addEventListener('click', async () => {
+    const nomeSala = prompt("Digite o nome da nova sala:");
+    if (nomeSala) {
         try {
-            await addDoc(collection(db, 'mensagens'), {
-                mensagem: mensagem,
-                usuario: nome,
-                criadoEm: new Date()
-            });
-            campoConversa.value = ''; // Limpar campo após o envio
+            await addDoc(collection(db, 'salas'), { nomeSala: nomeSala });
         } catch (error) {
-            console.error("Erro ao enviar a mensagem: ", error);
+            console.error("Erro ao criar a sala: ", error);
         }
-    } else {
-        alert("Usuário não autenticado.");
     }
 });
+
+// Função para o usuário entrar na sala
+function entrarNaSala(salaId) {
+    // Mudar o título para refletir a sala escolhida
+    const salaElement = salasLista.querySelector(`[data-id="${salaId}"]`);
+    const nomeSala = salaElement ? salaElement.textContent : 'Sala não encontrada';  // Verificar se encontrou a sala
+    nomeComunidade.textContent = `${nomeSala}`;
+
+    // Alterar a coleção de mensagens para essa sala
+    onSnapshot(collection(db, 'salas', salaId, 'mensagens'), (snapshot) => {
+        tarefaLista.innerHTML = '';  // Limpar a lista de mensagens antes de exibir novas
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const li = document.createElement('li');
+            li.textContent = `${data.usuario}: ${data.mensagem}`;
+            tarefaLista.appendChild(li);
+        });
+    });
+
+    // Enviar mensagem para a sala
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const mensagem = campoConversa.value;
+        const user = auth.currentUser;
+
+        if (user) {
+            const nome = user.displayName;
+            try {
+                await addDoc(collection(db, 'salas', salaId, 'mensagens'), {
+                    mensagem: mensagem,
+                    usuario: nome,
+                    criadoEm: new Date()
+                });
+                campoConversa.value = ''; // Limpar campo após o envio
+            } catch (error) {
+                console.error("Erro ao enviar a mensagem: ", error);
+            }
+        } else {
+            alert("Usuário não autenticado.");
+        }
+    });
+}
