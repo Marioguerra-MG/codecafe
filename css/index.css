@@ -16,117 +16,123 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: linear-gradient(90deg, #8d4bed, #a64bed);
+    background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
 }
 
-.conteudoLoginCadastar{
-    width: 70%;
+.conteudoLoginCadastar {
+    width: 30%; /* Ajuste o tamanho para que ocupe mais espaço */
+    max-width: 1000px; /* Define um tamanho máximo */
     height: 70%;
     display: flex;
-    align-items: center;
-    flex-direction: row;
-    background-color: #5c05ff;
-    border-radius: 15px;
-    justify-content: space-between;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-
-.telaLogo{
-    width: 50%;
-    display: flex;
-    align-items: center;
     justify-content: center;
-
+    align-items: center;
+    flex-direction: row; /* Alinha os itens em linha */
+    background-color: #fafafa;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    padding: 20px; /* Adiciona um preenchimento interno */
+    gap: 30px; /* Espaçamento entre os itens */
+    border: 1px solid black;
 }
 
-#logoTexto{
+.telaLogo {
+    flex: 1; /* Garante que a logo ocupe o espaço restante */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logoTexto {
     font-size: 50px;
     font-weight: 500;
     color: white;
 }
 
-
-.LoginCadastar{
-    width: 50%;
-    height: 100%;
+.LoginCadastar {
+    flex: 2; /* Garante que o formulário ocupe o dobro do espaço da logo */
     display: flex;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Garante que o conteúdo fique centralizado */
     background-color: white;
-    gap: 60px;
-
-   
+    border-radius: 10px;
+    padding: 40px; /* Preenchimento interno */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    
 }
 
-.saudacoes{
-    width: 85%;
-    height: auto;
-    margin-top: 25px;
+.saudacoes {
+    width: 100%;
+    text-align: center;
 }
 
-.saudacoes h1{
+.saudacoes h1 {
     color: #a64bed;
-    font-size: 40px;    
+    font-size: 35px;
 }
 
-.dadosDeLogin{
+.dadosDeLogin {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
-#nomeUsuario #senhaUsuario{
-    display: flex;
-    flex-direction: column;
-
-}
-
-input{    
-    width: 400px;
-    height: 30px;
-    font-size: 22px;
+input {
+    width: 100%;
+    max-width: 400px; /* Limita o tamanho máximo dos campos */
+    height: 40px;
+    font-size: 16px;
     outline: none;
     border: none;
     border-bottom: 2px solid #a64bed;
-    font-size: 15px;
+    padding: 5px;
     color: rgb(150, 150, 150);
+    transition: border-color 0.3s ease;
 }
 
+input:focus {
+    border-bottom: 2px solid #5c05ff;
+}
 
-
-.dadosDeLogin button{    
-    width: 80%;
+.dadosDeLogin button {
+    width: 100%;
     height: 50px;
     border: none;
     background-color: #5c05ff;
     font-weight: 500;
     border-radius: 5px;
     color: white;
-    font-size: 25px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.criarContaSenha{
-    width: 85%;
+.dadosDeLogin button:hover {
+    background-color: #4b04d4;
+}
+
+.criarContaSenha {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     gap: 10px;
-}
-
-#entrar{
-    cursor: pointer;
-}
-
-a{
-    text-decoration: none;
+    text-align: center;
 }
 
 .criarContaSenha a {
     text-decoration: none;
     color: #5c05ff;
+    font-size: 14px;
     cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.criarContaSenha a:hover {
+    color: #4b04d4;
 }
 
 @media (max-width: 1045px) {
@@ -134,10 +140,9 @@ a{
         width: 90%;
     }
 
-    input{
-        width: 80%;
+    input {
+        width: 100%;
     }
-
 }
 
 @media (max-width: 834px) {
@@ -147,13 +152,9 @@ a{
     }
 
     .LoginCadastar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
+        gap: 20px;
     }
 
- 
     .saudacoes h1 {
         font-size: 30px;
     }
@@ -161,9 +162,6 @@ a{
     .telaLogo,
     .LoginCadastar {
         width: 100%;
-        gap: 30px;
+        gap: 20px;
     }
 }
-
-
-

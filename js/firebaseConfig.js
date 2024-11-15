@@ -64,7 +64,8 @@ document.getElementById('btnCadastrar').addEventListener('click', async () => {
         });
 
         // Redirecionar para a página inicial
-        window.location.href = "index.html";
+        
+        window.location.href = "/index.html";
 
     } catch (error) {
         let errorMessage = "Erro ao cadastrar. Tente novamente.";
