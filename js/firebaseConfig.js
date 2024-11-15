@@ -24,9 +24,19 @@ document.getElementById('btnCadastrar').addEventListener('click', async () => {
     const senha = document.getElementById('senhaInput').value;  
     const confirmarSenha = document.getElementById('confirmarSenhaInput').value;
 
-    // Verificar se os campos não estão vazios
+    // Validação de campos
     if (!nome || !email || !senha || !confirmarSenha) {
         alert("Por favor, preencha todos os campos.");
+        return;
+    }
+
+    if (!email.includes('@') || email.length < 5) {
+        alert("Por favor, insira um email válido.");
+        return;
+    }
+
+    if (senha.length < 6) {
+        alert("A senha deve ter pelo menos 6 caracteres.");
         return;
     }
 
@@ -38,25 +48,36 @@ document.getElementById('btnCadastrar').addEventListener('click', async () => {
     try {
         // Criar usuário com email e senha
         const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
         alert("Usuário cadastrado com sucesso!");
 
-        // Atualizar o nome do usuário no Firebase Authentication
-        await updateProfile(userCredential.user, {
-            displayName: nome  // Define o nome do usuário
+        // Atualizar perfil do usuário
+        await updateProfile(user, {
+            displayName: nome,
         });
 
-        // Salvar dados do usuário no Firestore
-        await setDoc(doc(db, "usuarios", userCredential.user.uid), {
+        // Salvar dados no Firestore
+        await setDoc(doc(db, "usuarios", user.uid), {
             email: email,
             usuario: nome,
             criadoEm: new Date()
         });
 
-        // Redirecionar para a página 'index.html' após o cadastro
-        window.location.href = "/index.html";  // Certifique-se de que o caminho está correto
+        // Redirecionar para a página inicial
+        window.location.href = "index.html";
 
     } catch (error) {
-        alert(`Erro: ${error.message}`);
-        console.error("Erro ao cadastrar: ", error);
+        let errorMessage = "Erro ao cadastrar. Tente novamente.";
+
+        if (error.code === 'auth/email-already-in-use') {
+            errorMessage = "Este email já está em uso.";
+        } else if (error.code === 'auth/weak-password') {
+            errorMessage = "A senha deve ter no mínimo 6 caracteres.";
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = "O email fornecido não é válido.";
+        }
+
+        alert(errorMessage);
+        console.error("Erro ao cadastrar:", error);
     }
 });

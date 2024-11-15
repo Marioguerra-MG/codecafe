@@ -69,6 +69,13 @@ header{
    
 }
 
+.imagemPerfil{
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+}
+
 .conteudoDados input{
     width: 400px;
     height: 30px;

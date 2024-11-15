@@ -3,28 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS do EmojiMart -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart/css/emoji-mart.css">
+
     <link rel="stylesheet" href="/css/telaConteudo.css">
-    <title>CodeCafé conteudo</title>
+    <title>CodeCafé - Conteúdo</title>
 </head>
 <body>
 
     <div class="informacoesUsuario">
-        <h1>ola</h1>
-    </div>
+        <div class="imgPerfil">
+            <h1 id="nomePerfil">Olá!</h1>
+        </div>
 
+        <div class="conteudoPerfil">
+            <div class="amigos">
+                <h1>Amigos</h1>
+            </div>
+        </div>
+
+        <div class="emoticon">
+            <h1>Emoji</h1>
+            <button id="emojiBtn">Escolher Emoji</button>
+        </div>
+    </div>
 
     <div class="conteudoCorpo">
         <form>
-            <input id="CampoConversa" type="text" name="tarefa"/>
-            <input id="enviarMensagam" type="submit"> 
+            <input id="CampoConversa" type="text" name="tarefa" />
+            <input id="enviarMensagam" type="submit" value="Enviar" />
         </form>
 
         <ul id="tarefa-lista"></ul>
-
     </div>
 
+    <!-- Firebase e EmojiMart -->
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <!-- JS do EmojiMart -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-mart/dist/index.min.js"></script>
+    <!-- Seu arquivo de JS -->
     <script type="module" src="/js/telaConteudo.js"></script>
+
 </body>
 </html>

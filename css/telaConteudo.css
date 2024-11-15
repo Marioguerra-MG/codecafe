@@ -15,35 +15,84 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(90deg, #8d4bed, #a64bed);
 }
 
 .informacoesUsuario{
-    width: 25%;
+    width: 20%;
     height: 90%;
-    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    
+}
+
+
+.imgPerfil{
+    width: 90%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 8px;
+
+
+}
+
+.conteudoPerfil{
+    width: 90%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 8px;
+}
+
+
+.emoticon{
+    width: 90%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.emoji-picker-container {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .conteudoCorpo{
-    width: 70%;
+    width: 75%;
     height: 90%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: 1px solid black;
     background-color: #e0d9d1;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 form{
-    width: 95%;
+    width:100%;
+    height: 10%;
     display: flex;
     gap: 15px;
     justify-content: center;
-    margin-top: 15px;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 #CampoConversa{
-    width: 500px;
-    height: 30px;
+    width: 85%;
+    height: 40px;
     outline: none;
     border-radius: 8px;
     padding: 10px;
@@ -52,7 +101,7 @@ form{
 
 #enviarMensagam{
     width: 50px;
-    height: 30px;
+    height: 40px;
     outline: none;
     border-radius: 8px;
     border: none;
@@ -61,22 +110,31 @@ form{
     font-weight: 500;
 }
 
-ul{
+ul {
     display: flex;
     flex-direction: column;
-    text-decoration: none;
     gap: 10px;
-    max-height: 500px; /* Ajuste conforme necessário */
+    max-height: 600px; /* Ajustável conforme necessário */
     overflow-y: auto;
-    margin-top: 15px;
-    width: 95%;
+    margin-top: 10px;
+    padding: 0; /* Garantindo que a lista não tenha padding indesejado */
+    overflow-x: hidden;
+    list-style-type: none;
+
+    scrollbar-width: thin;  
+    scrollbar-color: transparent transparent;
 }
 
-li{
-    height: auto;
+li {
     background-color: #d8f3c2;
     border-radius: 8px;
-    padding: 10px;
-    width: 95%;
+    padding: 10px 15px; /* Espaçamento interno para uma aparência mais confortável */
+    width: auto; /* Ocupa 80% da largura do pai (ul) */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word; /* Quebra o texto caso ele seja muito longo */
+    margin: 0 auto; /* Centraliza as li dentro do ul */
+    white-space: normal;
+    max-width: 700px;
 }
+
+

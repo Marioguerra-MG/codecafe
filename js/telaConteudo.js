@@ -17,43 +17,51 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// Referências para os elementos HTML
 const form = document.querySelector('form');
 const tarefaLista = document.getElementById('tarefa-lista');
+const campoConversa = document.getElementById('CampoConversa');
+const nomePerfil = document.getElementById('nomePerfil');
 
-// Função para adicionar tarefa ao Firestore
+// Função para exibir o nome do usuário autenticado
+auth.onAuthStateChanged(user => {
+    if (user) {
+        nomePerfil.textContent = user.displayName || 'Usuário';
+    } else {
+        nomePerfil.textContent = 'Olá, visitante';
+    }
+});
+
+// Exibir as mensagens em tempo real
+onSnapshot(collection(db, 'mensagens'), (snapshot) => {
+    tarefaLista.innerHTML = '';
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        const li = document.createElement('li');
+        li.textContent = `${data.usuario}: ${data.mensagem}`;
+        tarefaLista.appendChild(li);
+    });
+});
+
+// Enviar uma mensagem
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const tarefa = document.querySelector('[name=tarefa]').value;
-
+    const mensagem = campoConversa.value;
     const user = auth.currentUser;
-    
+
     if (user) {
-        const nome = user.displayName; // Pega o nome do usuário autenticado
-        
+        const nome = user.displayName;
         try {
-            // Salva a tarefa com o nome do usuário
-            await addDoc(collection(db, 'tarefa'), {
-                tarefa: tarefa,
-                usuario: nome, // Salva o nome do usuário junto com a tarefa
+            await addDoc(collection(db, 'mensagens'), {
+                mensagem: mensagem,
+                usuario: nome,
                 criadoEm: new Date()
             });
-            alert('Tarefa cadastrada com sucesso!');
-            form.reset();
+            campoConversa.value = ''; // Limpar campo após o envio
         } catch (error) {
-            alert('Erro ao cadastrar a tarefa: ' + error.message);
+            console.error("Erro ao enviar a mensagem: ", error);
         }
     } else {
         alert("Usuário não autenticado.");
     }
-});
-
-// Função para exibir as tarefas em tempo real
-onSnapshot(collection(db, 'tarefa'), (snapshot) => {
-    tarefaLista.innerHTML = '';  // Limpar lista antes de adicionar novas tarefas
-    snapshot.forEach((doc) => {
-        const data = doc.data();
-        const li = document.createElement('li');
-        li.textContent = `${data.usuario}: ${data.tarefa}`; // Exibe o nome do usuário junto com a tarefa
-        tarefaLista.appendChild(li);
-    });
 });
