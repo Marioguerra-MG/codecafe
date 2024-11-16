@@ -201,19 +201,115 @@ li {
     max-width: 700px;
 }
 
+/* Responsividade refinada */
 @media (max-width: 834px) {
-
-    .informacoesUsuario{
-        display: none;
+    /* Ajusta o layout para dispositivos menores */
+    body {
+        flex-direction: column;
+        align-items: center; /* Alinha o conteúdo ao centro */
     }
 
-    .conteudoCorpo{
-        width: 95%;
+    .informacoesUsuario {
+        display: flex;
+        flex-direction: column;
+        width: 100%;  /* Ajuste da largura */
+        gap: 5px;     /* Reduz o espaçamento entre os itens */
     }
 
-    #enviarMensagam{
-    display: none;
+    .conteudoCorpo {
+        width: 90%;   /* Ajusta a largura para telas menores */
+        padding: 8px; /* Reduz o padding para ficar mais compacto */
+        display: flex;
+        flex-direction: column;  /* Exibe os itens em coluna */
+        align-items: center;  /* Garante que o conteúdo seja centralizado */
+    }
+
+    .emoticon {
+        display: none;  /* Esconde o emoticon */
+    }
+
+    #enviarMensagam {
+        display: none;  /* Esconde o botão de enviar mensagem */
+    }
+
+    /* Ajuste de comunidades */
+    #salas-lista {
+        display: none;  /* Esconde a lista de comunidades */
+    }
+
+    #comunidadesTexto {
+        display: block;  /* Exibe um texto informativo sobre as comunidades */
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 5px; /* Diminui o espaçamento */
+        color: #818181;
+    }
+
+    /* Ajustes adicionais nos elementos */
+    .imgPerfil {
+        width: 100%;  /* Garante que o perfil ocupe toda a largura disponível */
+        padding: 5px; /* Diminui o padding */
+        text-align: center;
+    }
+
+    .conteinerNomeComunidade {
+        width: 100%;  /* Ajusta o tamanho do contêiner */
+        text-align: center;
+        margin-bottom: 5px; /* Diminui o espaço entre o nome da comunidade e outros elementos */
+    }
+
+    #nomeComunidade {
+        font-size: 16px;  /* Ajusta o tamanho do nome da comunidade */
+        color: #b1b1b1;
+    }
+
+    ul {
+        width: 100%;  /* Ajuste na largura da lista */
+        max-height: 350px; /* Limita a altura para telas menores */
+        padding: 0;  /* Remove o padding */
+        margin-top: 5px;  /* Diminui o espaçamento superior */
+    }
+
+    li {
+        max-width: 100%;  /* Garante que a li ocupe toda a largura disponível */
+        margin: 5px 0;    /* Reduz a margem entre as mensagens */
+        padding: 8px 10px; /* Reduz o padding */
+        font-size: 14px;  /* Ajuste do tamanho da fonte para dispositivos pequenos */
+    }
+
+    /* Ajustes no campo de entrada de mensagens */
+    #CampoConversa {
+        width: 90%;   /* Ajusta o campo de conversa para telas menores */
+        height: 35px;  /* Ajusta a altura */
+        padding: 5px;  /* Diminui o padding */
+        font-size: 14px;
+        margin-bottom: 10px; /* Diminui o espaçamento entre os campos */
+    }
+
+    /* Ajustes para o botão de envio */
+    #enviarMensagam {
+        width: 90%;  /* Faz o botão ocupar 90% da largura */
+        height: 40px;  /* Ajusta a altura do botão */
+        margin-top: 10px; /* Adiciona um pequeno espaço acima */
+        font-size: 16px;  /* Ajusta o tamanho da fonte */
+    }
+
+    /* Ajusta o tamanho do nome de usuário */
+    #nomePerfil {
+        font-size: 16px;
+        margin-bottom: 5px; /* Diminui o espaçamento */
+    }
+
+    .amigos{
+        display: flex;
+    }
+
+    /* Flex ajustado para conteúdo corpo e perfil juntos */
+    .conteudoCorpo {
+        display: flex;
+        flex-direction: column; /* Manter a ordem dos itens na coluna */
+        align-items: flex-start; /* Alinha os itens no início */
     }
 }
-
 
