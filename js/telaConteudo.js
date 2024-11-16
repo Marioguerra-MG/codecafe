@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -24,6 +24,10 @@ const campoConversa = document.getElementById('CampoConversa');
 const nomePerfil = document.getElementById('nomePerfil');
 const salasLista = document.getElementById('salas-lista');
 const nomeComunidade = document.getElementById('nomeComunidade');
+const logoutButton = document.getElementById('logoutButton');
+
+// Variável global para armazenar o ID da sala atual
+let salaIdAtual = null;
 
 // Função para exibir o nome do usuário autenticado
 auth.onAuthStateChanged(user => {
@@ -68,6 +72,9 @@ function entrarNaSala(salaId) {
     const nomeSala = salaElement ? salaElement.textContent : 'Sala não encontrada';  // Verificar se encontrou a sala
     nomeComunidade.textContent = `${nomeSala}`;
 
+    // Armazenar o ID da sala atual
+    salaIdAtual = salaId;
+
     // Alterar a coleção de mensagens para essa sala
     onSnapshot(collection(db, 'salas', salaId, 'mensagens'), (snapshot) => {
         tarefaLista.innerHTML = '';  // Limpar a lista de mensagens antes de exibir novas
@@ -75,30 +82,65 @@ function entrarNaSala(salaId) {
             const data = doc.data();
             const li = document.createElement('li');
             li.textContent = `${data.usuario}: ${data.mensagem}`;
+
+            // Criar botão de exclusão apenas para a mensagem do usuário autenticado
+            const deleteButton = document.createElement('button');
+            deleteButton.innerHTML = '&#10006;'; // Símbolo "X" para exclusão (código Unicode)
+            deleteButton.classList.add('delete-btn'); // Classe CSS para estilizar o botão
+
+            // Verificar se o usuário é o dono da mensagem
+            if (auth.currentUser && data.usuario === auth.currentUser.displayName) {
+                deleteButton.addEventListener('click', () => excluirMensagem(doc.id));
+                li.appendChild(deleteButton); // Adiciona o botão de exclusão apenas para a própria mensagem
+            }
+
             tarefaLista.appendChild(li);
         });
     });
-
-    // Enviar mensagem para a sala
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const mensagem = campoConversa.value;
-        const user = auth.currentUser;
-
-        if (user) {
-            const nome = user.displayName;
-            try {
-                await addDoc(collection(db, 'salas', salaId, 'mensagens'), {
-                    mensagem: mensagem,
-                    usuario: nome,
-                    criadoEm: new Date()
-                });
-                campoConversa.value = ''; // Limpar campo após o envio
-            } catch (error) {
-                console.error("Erro ao enviar a mensagem: ", error);
-            }
-        } else {
-            alert("Usuário não autenticado.");
-        }
-    });
 }
+
+// Função para excluir a mensagem
+async function excluirMensagem(mensagemId) {
+    if (confirm("Tem certeza que deseja excluir esta mensagem?")) {
+        try {
+            await deleteDoc(doc(db, 'salas', salaIdAtual, 'mensagens', mensagemId));
+            console.log("Mensagem excluída com sucesso");
+        } catch (error) {
+            console.error("Erro ao excluir a mensagem: ", error);
+        }
+    }
+}
+
+// Enviar mensagem para a sala
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const mensagem = campoConversa.value;
+    const user = auth.currentUser;
+
+    if (user && salaIdAtual) { // Verifica se há um usuário autenticado e uma sala selecionada
+        const nome = user.displayName;
+        try {
+            await addDoc(collection(db, 'salas', salaIdAtual, 'mensagens'), {
+                mensagem: mensagem,
+                usuario: nome,
+                criadoEm: new Date()
+            });
+            campoConversa.value = ''; // Limpar campo após o envio
+        } catch (error) {
+            console.error("Erro ao enviar a mensagem: ", error);
+        }
+    } else {
+        alert("Usuário não autenticado ou sala não selecionada.");
+    }
+});
+
+// Função para logout
+logoutButton.addEventListener('click', () => {
+    signOut(auth).then(() => {
+        console.log('Usuário desconectado');
+        nomePerfil.textContent = 'Olá, visitante'; // Atualiza o nome do perfil
+        window.location.href = "/index.html"; // Redireciona para a tela de login
+    }).catch((error) => {
+        console.error('Erro ao fazer logout: ', error);
+    });
+});

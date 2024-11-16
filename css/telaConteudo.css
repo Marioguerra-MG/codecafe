@@ -43,11 +43,28 @@ body{
     height: 10%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 8px;
     background-color: white;
     border-radius: 8px;
 
 
+}
+
+/* Estilo para o botão de exclusão */
+.delete-btn {
+    background: none;  /* Remove o fundo */
+    border: none;      /* Remove a borda */
+    color: rgb(252, 126, 126);        /* Cor do texto (X) */
+    font-size: 20px;   /* Tamanho da fonte */
+    cursor: pointer;   /* Cursor de ponteiro para indicar que é clicável */
+    margin-left: 10px;  /* Margem à esquerda do ícone */
+    padding: 0;         /* Remove o padding */
+    font-weight: 200;  /* Deixa o texto mais forte */
+}
+
+.delete-btn:hover {
+    color: darkred;     /* Cor do X no hover */
 }
 
 #addComunidades{
