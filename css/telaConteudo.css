@@ -159,7 +159,7 @@ body {
 }
 
 .emoji {
-    font-size: 30px;
+    font-size: 25px;
     background: none;
     border: none;
     cursor: pointer;
@@ -227,8 +227,8 @@ form{
     body {
         display: flex;
         flex-direction: column-reverse;
-        align-items: center;
-        padding: 10px;
+        justify-content: start;
+        margin-top: 8px;
     }
 
     /* Informações do Usuário */
@@ -250,8 +250,7 @@ form{
     .imgPerfil {
         width: 80%;
         height: auto;
-        padding: 10px;
-        margin-bottom: 15px;
+        
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         order: -1; /* Garante que a imagem do perfil fique no topo */
@@ -290,32 +289,8 @@ form{
         background-color: #ffffff;
     }
 
-    
-
     .emoticon {
         display: none; /* Já aplicado para esconder os emoticons */
-    }
-
-    /* Ajuste do container de emojis */
-    #emojiContainer {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 20px;
-        padding: 10px;
-    }
-
-    .emoji {
-        font-size: 30px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-
-    .emoji:hover {
-        transform: scale(1.2);
     }
 
     /* Ajustes nas comunidades - Exibir em linha */
@@ -324,9 +299,7 @@ form{
         flex-direction: row; /* As comunidades estarão em uma linha */
         gap: 10px; /* Adiciona um pequeno espaço entre os itens */
         overflow-x: auto; /* Permite rolagem horizontal */
-        margin-top: 20px;
-        padding: 10px 0;
-        width: 100%; /* Garante que o container ocupe toda a largura disponível */
+        width: 50%; /* Garante que o container ocupe toda a largura disponível */
     }
 
     #salas-lista li {
@@ -342,6 +315,7 @@ form{
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         cursor: pointer;
         transition: 0.3s ease;
+        max-width: 300px;
     }
 
     #salas-lista li:hover {
@@ -356,12 +330,12 @@ form{
     #addComunidades {
         width: 100%;
         font-size: 18px;
-        padding: 15px;
         border-radius: 8px;
         background-color: #ffffff;
         border: 2px solid #00695c;
         color: #00695c;
         transition: 0.3s ease;
+        text-align: center;
     }
 
     #addComunidades:hover {
@@ -375,6 +349,8 @@ form{
         flex-direction: row; /* As comunidades agora estarão lado a lado */
         flex-wrap: wrap; /* Permite que as comunidades quebrem para a linha seguinte, se necessário */
         justify-content: space-between;
+        overflow-x: auto;
+
     }
 
     .amigos {
