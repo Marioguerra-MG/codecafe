@@ -45,56 +45,43 @@
         <div class="conteudoPerfil">
             <div class="amigos">
                 <h1 id="comunidadesTexto">Comunidades</h1>
-                <button id="addComunidades">Adicionar</button>
+                <button id="addComunidades">ADD</button>
                 <ul id="salas-lista"></ul>  <!-- Lista de salas -->
             </div>
         </div>
     </div>
 
     <div class="conteudoCorpo">
-
         <div class="conteinerNomeComunidade">
             <h1 id="nomeComunidade">Brasil</h1>
-            <button id="btnMobile"><i class="fa-solid fa-bars"></i></button>
         </div>
         <form>
             <input id="CampoConversa" type="text" name="tarefa" />
-            <input id="enviarMensagam" type="submit" value="Enviar" />
+            
+            <div class="input-container">
+                <button id="enviarMensagam" type="submit">
+                <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
         </form>
         <ul id="tarefa-lista"></ul>
     </div>
+    
+    
+    
 
-    <!-- Formulário de Adicionar Comunidade (invisível inicialmente) -->
+    <!-- Formulário de Adicionar Comunidade (invisível inicialmente)
     <div id="addCommunityForm" style="display:none;">
         <input type="text" id="communityName" placeholder="Nome da Comunidade">
         <button id="createCommunityButton">Criar Comunidade</button>
     </div>
+     -->
 
-    <div class="menuMobile">
-        <div class="imgPerfil">
-            <h1 id="nomePerfil">Olá!</h1>
-            <button id="logoutButton">Sair</button>
-        </div>
-        <div class="conteudoPerfil">
-            <div class="amigos">
-                <h1 id="comunidadesTexto">Comunidades</h1>
-                <button id="addComunidades">Adicionar</button>
-                <ul id="salas-lista"></ul>
-            </div>
-        </div>
-            <!-- Formulário de Adicionar Comunidade (invisível inicialmente) -->
-        <div id="addCommunityForm" style="display:none;">
-            <input type="text" id="communityName" placeholder="Nome da Comunidade">
-            <button id="createCommunityButton">Criar Comunidade</button>
-        </div>
-    </div>
-    
 
     <!-- Firebase e EmojiMart -->
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-    <!-- Seu arquivo de JS -->
     <script type="module" src="/js/telaConteudo.js"></script>
     <script src="/js/menuMobile.js"></script>
 
@@ -109,6 +96,5 @@
             });
         });
     </script>
-
 </body>
 </html>

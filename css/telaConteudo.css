@@ -1,23 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* Fontes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    font-style: normal;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
     background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
 }
 
+/* Informações do Usuário */
 .informacoesUsuario {
     width: 20%;
     height: 90%;
@@ -27,296 +26,372 @@ body {
     flex-direction: column;
 }
 
-#salas-lista li {
-    cursor: pointer; /* Aplica o cursor de mão apontando */
-}
-
 #nomePerfil {
-    font-size: 20px;
-    color: #818181;
+    font-size: 22px;
+    color: #4f4f4f;
     font-weight: 600;
 }
 
 .imgPerfil {
     width: 90%;
-    height: 10%;
+    height: 20%;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 8px;
-    background-color: white;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Estilo para o botão de exclusão */
 .delete-btn {
-    background: none;  /* Remove o fundo */
-    border: none;      /* Remove a borda */
-    color: rgb(252, 126, 126);        /* Cor do texto (X) */
-    font-size: 20px;   /* Tamanho da fonte */
-    cursor: pointer;   /* Cursor de ponteiro para indicar que é clicável */
-    margin-left: 10px;  /* Margem à esquerda do ícone */
-    padding: 0;         /* Remove o padding */
-    font-weight: 200;  /* Deixa o texto mais forte */
+    background: none;
+    border: none;
+    color: #f44336;
+    font-size: 22px;
+    cursor: pointer;
+    margin-left: 12px;
+    padding: 0;
 }
 
 .delete-btn:hover {
-    color: darkred;     /* Cor do X no hover */
+    color: #d32f2f;
 }
 
 #addComunidades {
     cursor: pointer;
-}
-
-.conteudoPerfil {
-    width: 90%;
-    height: 50%;
-    display: flex;
-    justify-content: center;
-    background-color: white;
+    font-size: 18px;
+    color: #00695c;
+    border: 2px solid #00695c;
+    padding: 10px;
     border-radius: 8px;
+    background-color: #ffffff;
+    transition: 0.3s ease;
 }
 
-.amigos {
-    display: flex;
-    flex-direction: column;
+#addComunidades:hover {
+    background-color: #00695c;
+    color: white;
 }
 
-.emoticon {
-    width: 90%;
-    height: 40%;
+/* Melhorias para as comunidades */
+#salas-lista li {
+    list-style: none;
+    padding: 15px;
+    margin: 10px 0;
+    background: #e0f7fa;
+    border-radius: 12px;
+    font-size: 16px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden; /* Garante que nada saia do contêiner */
-}
-
-#emojiContainer {
-    display: flex;
-    flex-wrap: wrap; /* Permite que os emojis se ajustem em várias linhas */
-    justify-content: space-around;
-    gap: 5px;
-    width: 100%; /* Garante que o container ocupe toda a largura disponível */
-    overflow: hidden; /* Evita que qualquer conteúdo extra seja mostrado */
-}
-
-.emoji {
-    font-size: 20px; /* Ajuste o tamanho conforme necessário */
-    background: none;
-    border: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    padding: 5px;
+    transition: all 0.3s ease;
 }
 
-.conteudoCorpo {
-    width: 75%;
-    height: 90%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    background-color: #e0d9d1;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+#salas-lista li:hover {
+    background: #b2ebf2;
+    transform: translateY(-5px);
 }
 
-form {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+#salas-lista li .delete-btn {
+    background: none;
+    color: #d32f2f;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+}
+
+#salas-lista li .delete-btn:hover {
+    color: #f44336;
 }
 
 #comunidadesTexto {
     font-size: 20px;
-    color: #818181;
+    color: #00796b;
     font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Design do conteúdo de perfil */
+.conteudoCorpo {
+    width: 80%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Destaque maior para o campo de conversa */
+#CampoConversa {
+    width: 80%;
+    height: 50px;
+    border-radius: 12px;
+    border: 2px solid #00796b;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    background-color: #f1f8f7;
+    transition: 0.3s;
+}
+
+#CampoConversa:focus {
+    border-color: #004d40;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Container de emojis */
+#emojiContainer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.emoji {
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.emoji:hover {
+    transform: scale(1.2);
 }
 
 .conteinerNomeComunidade {
     width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    background-color: white;
+    margin-bottom: 15px;
 }
 
 #nomeComunidade {
+    font-size: 20px;
     font-weight: 600;
-    color: #b1b1b1;
+    color: #00796b;
 }
 
 #CampoConversa {
-    width: 85%;
-    height: 40px;
-    outline: none;
-    border-radius: 8px;
-    padding: 10px;
-    border: 1px solid black;
+    border-radius: 10px;
+    border: 1px solid #00796b;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    width: 80%;
 }
 
-#enviarMensagam {
-    width: 50px;
-    height: 40px;
-    outline: none;
-    border-radius: 8px;
-    border: none;
-    background-color: blue;
-    color: white;
-    font-weight: 500;
-}
-
-ul {
+form{
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 600px; /* Ajustável conforme necessário */
-    overflow-y: auto;
-    margin-top: 10px;
-    padding: 0; /* Garantindo que a lista não tenha padding indesejado */
-    overflow-x: hidden;
-    list-style-type: none;
-
-    scrollbar-width: thin;  
-    scrollbar-color: transparent transparent;
+    gap: 5px;
 }
 
-li {
-    background-color: #d8f3c2;
+/* Estilo do botão */
+#enviarMensagam {
+    width: 60px;
+    height:50px;
     border-radius: 8px;
-    padding: 10px 15px; /* Espaçamento interno para uma aparência mais confortável */
-    width: auto; /* Ocupa 80% da largura do pai (ul) */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word; /* Quebra o texto caso ele seja muito longo */
-    margin: 0 auto; /* Centraliza as li dentro do ul */
-    white-space: normal;
-    max-width: 700px;
+    background-color: #00796b;
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size:20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 }
 
-#btnMobile{
-    display: none;
-}
-
-/* Estilo inicial (menu oculto) */
-.menuMobile {
-    display: none;
-    position: absolute;
-    top: 60px; /* Ajuste conforme necessário */
-    background-color: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 20px;
-    z-index: 1000;
-    width: 80%; /* Tamanho do menu */
-}
-
-/* Classe para exibir o menu */
-.menuMobile.show {
-    display: block;
+/* Estilo do botão ao passar o mouse */
+#enviarMensagam:hover {
+    background-color: #004d40;
 }
 
 
-
-/* Responsividade refinada */
-@media (max-width: 834px) {
-    /* Ajusta o layout para dispositivos menores */
+/* Layout responsivo */
+/* Layout responsivo */
+@media (max-width: 840px) {
     body {
-        flex-direction: column;
-        align-items: center; /* Alinha o conteúdo ao centro */
-        justify-content: center;
-    }
-
-    #btnMobile {
-        display: block; /* Torna o botão visível em telas pequenas */
-    }
-
-    .informacoesUsuario{
-        display: none;
-    }
-
-    .conteinerNomeComunidade{
         display: flex;
-        justify-content: space-between;
-        padding: 5px;
+        flex-direction: column-reverse;
+        align-items: center;
+        padding: 10px;
     }
 
-    .conteinerNomeComunidade button{
-        border: none;
-        background-color: none;
+    /* Informações do Usuário */
+    .informacoesUsuario {
+        width: 95%;
+        height: auto;
+        text-align: center;
+        margin-top: 0; /* Remover margens adicionais */
+        order: 1; /* Garante que as informações de usuário fiquem abaixo da imagem */
     }
 
+    #nomePerfil {
+        font-size: 20px;
+        color: #00796b;
+        font-weight: 600;
+    }
 
+    /* A imagem do perfil será ajustada para estar no topo */
+    .imgPerfil {
+        width: 80%;
+        height: auto;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        order: -1; /* Garante que a imagem do perfil fique no topo */
+    }
+
+    /* Ajuste do campo de conversa */
     .conteudoCorpo {
-        width: 90%;   /* Ajusta a largura para telas menores */
-        padding: 8px; /* Reduz o padding para ficar mais compacto */
+        width: 97%; /* O chat vai ocupar 75% da largura da tela */
+        height: auto;
         display: flex;
-        flex-direction: column;  /* Exibe os itens em coluna */
-        align-items: center;  /* Garante que o conteúdo seja centralizado */
+        flex-direction: column;
+        align-items: center;
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
+
+    /* Ajustando largura do Campo de Conversa */
+    #CampoConversa {
+        width: 100%;
+        height: 50px;
+        padding: 12px;
+        font-size: 14px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        border: 2px solid #00796b;
+        background-color: #f1f8f7;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+    }
+
+    #CampoConversa:focus {
+        outline: none;
+        border-color: #004d40;
+        background-color: #ffffff;
+    }
+
+    
 
     .emoticon {
-        display: none;  /* Esconde o emoticon */
+        display: none; /* Já aplicado para esconder os emoticons */
     }
 
-    #enviarMensagam {
-        display: none;  /* Esconde o botão de enviar mensagem */
+    /* Ajuste do container de emojis */
+    #emojiContainer {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        padding: 10px;
     }
 
-    /* Ajuste de comunidades */
+    .emoji {
+        font-size: 30px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .emoji:hover {
+        transform: scale(1.2);
+    }
+
+    /* Ajustes nas comunidades - Exibir em linha */
     #salas-lista {
-        display: none;  /* Esconde a lista de comunidades */
+        display: flex;
+        flex-direction: row; /* As comunidades estarão em uma linha */
+        gap: 10px; /* Adiciona um pequeno espaço entre os itens */
+        overflow-x: auto; /* Permite rolagem horizontal */
+        margin-top: 20px;
+        padding: 10px 0;
+        width: 100%; /* Garante que o container ocupe toda a largura disponível */
+    }
+
+    #salas-lista li {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+        margin: 10px;
+        width: 45%; /* Cada comunidade vai ocupar 45% da largura, permitindo duas por linha */
+        background: #e0f7fa;
+        border-radius: 12px;
+        font-size: 16px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    #salas-lista li:hover {
+        background: #b2ebf2;
+        transform: translateY(-5px);
+    }
+
+    #salas-lista li .delete-btn {
+        font-size: 18px;
+    }
+
+    #addComunidades {
+        width: 100%;
+        font-size: 18px;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        border: 2px solid #00695c;
+        color: #00695c;
+        transition: 0.3s ease;
+    }
+
+    #addComunidades:hover {
+        background-color: #00695c;
+        color: white;
+    }
+
+    /* Ajustes no layout do conteúdo de perfil e comunidades */
+    .conteudoPerfil {
+        display: flex;
+        flex-direction: row; /* As comunidades agora estarão lado a lado */
+        flex-wrap: wrap; /* Permite que as comunidades quebrem para a linha seguinte, se necessário */
+        justify-content: space-between;
+    }
+
+    .amigos {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 
     #comunidadesTexto {
-        display: block;  /* Exibe um texto informativo sobre as comunidades */
-        font-size: 14px;
-        font-weight: 500;
-        text-align: center;
-        margin-top: 5px; /* Diminui o espaçamento */
-        color: #818181;
+        display: none;
+        height: 80px;
     }
 
-    /* Ajustes adicionais nos elementos */
-    .imgPerfil {
-        width: 100%;  /* Garante que o perfil ocupe toda a largura disponível */
-        padding: 5px; /* Diminui o padding */
-        text-align: center;
+    #addComunidades {
+        width: 60px;
+        height: 50px;
     }
-
-    .conteinerNomeComunidade {
-        width: 100%;  /* Ajusta o tamanho do contêiner */
-        text-align: center;
-        margin-bottom: 5px; /* Diminui o espaço entre o nome da comunidade e outros elementos */
-    }
-
-    #nomeComunidade {
-        font-size: 16px;  /* Ajusta o tamanho do nome da comunidade */
-        color: #b1b1b1;
-    }
-
-    ul {
-        width: 100%;  /* Ajuste na largura da lista */
-        max-height: 350px; /* Limita a altura para telas menores */
-        padding: 0;  /* Remove o padding */
-        margin-top: 5px;  /* Diminui o espaçamento superior */
-    }
-
-    li {
-        max-width: 100%;  /* Garante que a li ocupe toda a largura disponível */
-        margin: 5px 0;    /* Reduz a margem entre as mensagens */
-        padding: 8px 10px; /* Reduz o padding */
-        font-size: 14px;  /* Ajuste do tamanho da fonte para dispositivos pequenos */
-    }
-
-    /* Ajustes no campo de entrada de mensagens */
-    #CampoConversa {
-        width: 90%;   /* Ajusta o campo de conversa para telas menores */
-        height: 35px;  /* Ajusta a altura */
-        padding: 5px;  /* Diminui o padding */
-    }
-
 }
+
