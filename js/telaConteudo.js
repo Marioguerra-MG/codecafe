@@ -17,7 +17,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Referências para os elementos HTML
+// Seleção de elementos DOM
 const form = document.querySelector('form');
 const tarefaLista = document.getElementById('tarefa-lista');
 const campoConversa = document.getElementById('CampoConversa');
@@ -25,73 +25,89 @@ const nomePerfil = document.getElementById('nomePerfil');
 const salasLista = document.getElementById('salas-lista');
 const nomeComunidade = document.getElementById('nomeComunidade');
 const logoutButton = document.getElementById('logoutButton');
+const addComunidades = document.getElementById('addComunidades');
+const btnMobile = document.getElementById('btnMobile');
+const menuMobile = document.querySelector('.menuMobile');
 
 // Variável global para armazenar o ID da sala atual
 let salaIdAtual = null;
 
-// Função para exibir o nome do usuário autenticado
+// Exibir nome do usuário autenticado
 auth.onAuthStateChanged(user => {
     if (user) {
         nomePerfil.textContent = user.displayName || 'Usuário';
+        
+        // Adicionar classe ao menu mobile
+        const usernameClass = user.displayName ? user.displayName.replace(/\s+/g, '-').toLowerCase() : 'usuario';
+        
+        // Remove classes antigas que começam com 'user-'
+        menuMobile.classList.forEach(cls => {
+            if (cls.startsWith('user-')) {
+                menuMobile.classList.remove(cls);
+            }
+        });
+        
+        // Adiciona a nova classe com o nome do usuário
+        menuMobile.classList.add(`user-${usernameClass}`);
     } else {
         nomePerfil.textContent = 'Olá, visitante';
+        
+        // Remove quaisquer classes relacionadas ao usuário
+        menuMobile.classList.forEach(cls => {
+            if (cls.startsWith('user-')) {
+                menuMobile.classList.remove(cls);
+            }
+        });
     }
 });
 
-// Exibir as salas de chat em tempo real
+// Exibir salas de chat em tempo real
 onSnapshot(collection(db, 'salas'), (snapshot) => {
-    salasLista.innerHTML = '';  // Limpar a lista antes de exibir novamente
+    salasLista.innerHTML = ''; // Limpa a lista antes de atualizar
     snapshot.forEach(doc => {
         const sala = doc.data();
         const li = document.createElement('li');
         li.textContent = sala.nomeSala;
-        li.setAttribute('data-id', doc.id);  // Adicionar o atributo data-id
-        li.addEventListener('click', () => {
-            entrarNaSala(doc.id);  // Passa o ID da sala
-        });
+        li.setAttribute('data-id', doc.id); // Define o ID como atributo
+        li.addEventListener('click', () => entrarNaSala(doc.id));
         salasLista.appendChild(li);
     });
 });
 
 // Criar uma nova sala de chat
-document.getElementById('addComunidades').addEventListener('click', async () => {
+addComunidades.addEventListener('click', async () => {
     const nomeSala = prompt("Digite o nome da nova sala:");
     if (nomeSala) {
         try {
             await addDoc(collection(db, 'salas'), { nomeSala: nomeSala });
         } catch (error) {
-            console.error("Erro ao criar a sala: ", error);
+            console.error("Erro ao criar a sala:", error);
         }
     }
 });
 
 // Função para o usuário entrar na sala
 function entrarNaSala(salaId) {
-    // Mudar o título para refletir a sala escolhida
     const salaElement = salasLista.querySelector(`[data-id="${salaId}"]`);
-    const nomeSala = salaElement ? salaElement.textContent : 'Sala não encontrada';  // Verificar se encontrou a sala
-    nomeComunidade.textContent = `${nomeSala}`;
+    const nomeSala = salaElement ? salaElement.textContent : 'Sala não encontrada';
+    nomeComunidade.textContent = nomeSala;
 
-    // Armazenar o ID da sala atual
     salaIdAtual = salaId;
 
-    // Alterar a coleção de mensagens para essa sala
     onSnapshot(collection(db, 'salas', salaId, 'mensagens'), (snapshot) => {
-        tarefaLista.innerHTML = '';  // Limpar a lista de mensagens antes de exibir novas
+        tarefaLista.innerHTML = ''; // Limpa mensagens antes de atualizar
         snapshot.forEach(doc => {
             const data = doc.data();
             const li = document.createElement('li');
             li.textContent = `${data.usuario}: ${data.mensagem}`;
 
-            // Criar botão de exclusão apenas para a mensagem do usuário autenticado
-            const deleteButton = document.createElement('button');
-            deleteButton.innerHTML = '&#10006;'; // Símbolo "X" para exclusão (código Unicode)
-            deleteButton.classList.add('delete-btn'); // Classe CSS para estilizar o botão
-
-            // Verificar se o usuário é o dono da mensagem
+            // Botão de exclusão para mensagens do usuário atual
             if (auth.currentUser && data.usuario === auth.currentUser.displayName) {
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '&#10006;';
+                deleteButton.classList.add('delete-btn');
                 deleteButton.addEventListener('click', () => excluirMensagem(doc.id));
-                li.appendChild(deleteButton); // Adiciona o botão de exclusão apenas para a própria mensagem
+                li.appendChild(deleteButton);
             }
 
             tarefaLista.appendChild(li);
@@ -99,48 +115,51 @@ function entrarNaSala(salaId) {
     });
 }
 
-// Função para excluir a mensagem
+// Função para excluir mensagem
 async function excluirMensagem(mensagemId) {
     if (confirm("Tem certeza que deseja excluir esta mensagem?")) {
         try {
             await deleteDoc(doc(db, 'salas', salaIdAtual, 'mensagens', mensagemId));
-            console.log("Mensagem excluída com sucesso");
         } catch (error) {
-            console.error("Erro ao excluir a mensagem: ", error);
+            console.error("Erro ao excluir a mensagem:", error);
         }
     }
 }
 
-// Enviar mensagem para a sala
+// Enviar mensagem
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const mensagem = campoConversa.value;
     const user = auth.currentUser;
 
-    if (user && salaIdAtual) { // Verifica se há um usuário autenticado e uma sala selecionada
-        const nome = user.displayName;
+    if (user && salaIdAtual) {
         try {
             await addDoc(collection(db, 'salas', salaIdAtual, 'mensagens'), {
                 mensagem: mensagem,
-                usuario: nome,
+                usuario: user.displayName,
                 criadoEm: new Date()
             });
-            campoConversa.value = ''; // Limpar campo após o envio
+            campoConversa.value = ''; // Limpa o campo
         } catch (error) {
-            console.error("Erro ao enviar a mensagem: ", error);
+            console.error("Erro ao enviar a mensagem:", error);
         }
     } else {
         alert("Usuário não autenticado ou sala não selecionada.");
     }
 });
 
-// Função para logout
+// Logout
 logoutButton.addEventListener('click', () => {
     signOut(auth).then(() => {
         console.log('Usuário desconectado');
-        nomePerfil.textContent = 'Olá, visitante'; // Atualiza o nome do perfil
+        nomePerfil.textContent = 'Olá, visitante';
         window.location.href = "/index.html"; // Redireciona para a tela de login
     }).catch((error) => {
-        console.error('Erro ao fazer logout: ', error);
+        console.error('Erro ao fazer logout:', error);
     });
+});
+
+// Controle do menu mobile
+btnMobile.addEventListener('click', () => {
+    menuMobile.classList.toggle('ativo');
 });
