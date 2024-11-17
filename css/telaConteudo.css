@@ -237,13 +237,15 @@ form{
 
 
 /* Layout responsivo */
-/* Layout responsivo */
 @media (max-width: 840px) {
     body {
         display: flex;
         flex-direction: column-reverse;
         justify-content: start;
         margin-top: 8px;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
     }
 
     /* Informações do Usuário */
@@ -251,8 +253,8 @@ form{
         width: 95%;
         height: auto;
         text-align: center;
-        margin-top: 0; /* Remover margens adicionais */
-        order: 1; /* Garante que as informações de usuário fiquem abaixo da imagem */
+        margin-top: 0;
+        order: 1;
     }
 
     #nomePerfil {
@@ -261,7 +263,7 @@ form{
         font-weight: 600;
     }
 
-    /* A imagem do perfil será ajustada para estar no topo */
+    /* Ajuste da imagem do perfil */
     .imgPerfil {
         display: flex;
         justify-content: space-between;
@@ -269,12 +271,12 @@ form{
         height: auto;
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        order: -1; /* Garante que a imagem do perfil fique no topo */
+        order: -1;
     }
 
     /* Ajuste do campo de conversa */
     .conteudoCorpo {
-        width: 97%; /* O chat vai ocupar 75% da largura da tela */
+        width: 97%;
         height: auto;
         display: flex;
         flex-direction: column;
@@ -312,10 +314,11 @@ form{
     /* Ajustes nas comunidades - Exibir em linha */
     #salas-lista {
         display: flex;
-        flex-direction: row; /* As comunidades estarão em uma linha */
+        flex-direction: row; /* Mantendo as comunidades na linha */
         gap: 10px; /* Adiciona um pequeno espaço entre os itens */
+        width: 100%;
         overflow-x: auto; /* Permite rolagem horizontal */
-        width: 50%; /* Garante que o container ocupe toda a largura disponível */
+        padding: 10px;
     }
 
     #salas-lista li {
@@ -324,7 +327,6 @@ form{
         text-align: center;
         padding: 12px;
         margin: 10px;
-        width: 45%; /* Cada comunidade vai ocupar 45% da largura, permitindo duas por linha */
         background: #e0f7fa;
         border-radius: 12px;
         font-size: 16px;
@@ -343,30 +345,13 @@ form{
         font-size: 18px;
     }
 
-    #addComunidades {
-        width: 100%;
-        font-size: 18px;
-        border-radius: 8px;
-        background-color: #ffffff;
-        border: 2px solid #00695c;
-        color: #00695c;
-        transition: 0.3s ease;
-        text-align: center;
-    }
-
-    #addComunidades:hover {
-        background-color: #00695c;
-        color: white;
-    }
-
     /* Ajustes no layout do conteúdo de perfil e comunidades */
     .conteudoPerfil {
         display: flex;
-        flex-direction: row; /* As comunidades agora estarão lado a lado */
-        flex-wrap: wrap; /* Permite que as comunidades quebrem para a linha seguinte, se necessário */
+        flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-between;
-        overflow-x: auto;
-
+        width: 100%;
     }
 
     .amigos {
@@ -377,13 +362,8 @@ form{
     }
 
     #comunidadesTexto {
-        display: none;
-        height: 80px;
-    }
-
-    #addComunidades {
-        width: 60px;
-        height: 50px;
+        display: none; 
     }
 }
+
 
