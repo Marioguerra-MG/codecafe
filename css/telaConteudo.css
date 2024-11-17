@@ -248,9 +248,10 @@ form{
 
     /* A imagem do perfil será ajustada para estar no topo */
     .imgPerfil {
-        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
         height: auto;
-        
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         order: -1; /* Garante que a imagem do perfil fique no topo */
