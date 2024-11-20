@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -42,20 +42,24 @@ auth.onAuthStateChanged(user => {
 // Exibir salas de chat em tempo real
 onSnapshot(collection(db, 'salas'), (snapshot) => {
     salasLista.innerHTML = ''; // Limpa a lista antes de atualizar
-    snapshot.forEach(doc => {
+    snapshot.forEach(async (doc) => {
         const sala = doc.data();
         const li = document.createElement('li');
         li.textContent = sala.nomeSala;
         li.setAttribute('data-id', doc.id); // Define o ID como atributo
         li.addEventListener('click', () => entrarNaSala(doc.id));
         
-        // Adicionar ícone de exclusão à sala
-        const deleteButton = document.createElement('button');
-        deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
-        deleteButton.classList.add('delete-btn');
-        deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
-        li.appendChild(deleteButton);
-        
+        // Verificar se o usuário autenticado é o criador da sala
+        const user = auth.currentUser;
+        if (user && sala.criadoPor === user.uid) {
+            // Adicionar ícone de exclusão à sala se for o criador
+            const deleteButton = document.createElement('button');
+            deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
+            deleteButton.classList.add('delete-btn');
+            deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
+            li.appendChild(deleteButton);
+        }
+
         salasLista.appendChild(li);
     });
 });
@@ -63,9 +67,13 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
 // Criar uma nova sala de chat
 addComunidades.addEventListener('click', async () => {
     const nomeSala = prompt("Digite o nome da nova sala:");
-    if (nomeSala) {
+    const user = auth.currentUser;
+    if (nomeSala && user) {
         try {
-            await addDoc(collection(db, 'salas'), { nomeSala: nomeSala });
+            await addDoc(collection(db, 'salas'), {
+                nomeSala: nomeSala,
+                criadoPor: user.uid // Adiciona o UID do usuário
+            });
         } catch (error) {
             console.error("Erro ao criar a sala:", error);
         }
@@ -80,8 +88,12 @@ function entrarNaSala(salaId) {
 
     salaIdAtual = salaId;
 
+    // Exibir campo de envio de mensagens
+    document.getElementById('CampoConversa').style.display = 'block';
+
+    // Exibir as mensagens em tempo real
     onSnapshot(collection(db, 'salas', salaId, 'mensagens'), (snapshot) => {
-        tarefaLista.innerHTML = ''; // Limpa mensagens antes de atualizar
+        tarefaLista.innerHTML = ''; // Limpa as mensagens antes de atualizar
         snapshot.forEach(doc => {
             const data = doc.data();
             const li = document.createElement('li');
@@ -115,12 +127,35 @@ async function excluirMensagem(mensagemId) {
 // Função para excluir sala
 async function excluirSala(salaId, event) {
     event.stopPropagation();  // Evitar que o click no botão de excluir dispare o clique da sala
-    if (confirm("Tem certeza que deseja excluir esta sala?")) {
-        try {
-            await deleteDoc(doc(db, 'salas', salaId));
-        } catch (error) {
-            console.error("Erro ao excluir a sala:", error);
+
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Você precisa estar logado para excluir a sala.");
+        return;
+    }
+
+    // Obter os dados da sala para verificar se o usuário é o criador
+    const salaRef = doc(db, 'salas', salaId);
+    const salaSnap = await getDoc(salaRef);
+
+    if (salaSnap.exists()) {
+        const salaData = salaSnap.data();
+
+        // Verifica se o usuário é o criador da sala
+        if (salaData.criadoPor === user.uid) {
+            if (confirm("Tem certeza que deseja excluir esta sala?")) {
+                try {
+                    await deleteDoc(salaRef);
+                    console.log("Sala excluída com sucesso!");
+                } catch (error) {
+                    console.error("Erro ao excluir a sala:", error);
+                }
+            }
+        } else {
+            alert("Você não pode excluir uma sala que não criou.");
         }
+    } else {
+        console.error("Sala não encontrada.");
     }
 }
 
@@ -142,7 +177,7 @@ form.addEventListener('submit', async (e) => {
             console.error("Erro ao enviar a mensagem:", error);
         }
     } else {
-        alert("Usuário não autenticado ou sala não selecionada.");
+        alert("Selecione uma sala para enviar a mensagem.");
     }
 });
 
@@ -157,15 +192,14 @@ logoutButton.addEventListener('click', () => {
     });
 });
 
+// Função para filtrar comunidades em tempo real
 document.addEventListener('DOMContentLoaded', () => {
     const inputComunidades = document.getElementById('procurar');
-    const salasLista = document.getElementById('salas-lista');
 
-    // Função para filtrar comunidades em tempo real
     inputComunidades.addEventListener('input', () => {
         const termoBusca = inputComunidades.value.toLowerCase();
         onSnapshot(collection(db, 'salas'), (snapshot) => {
-            salasLista.innerHTML = ''; // Limpa a lista
+            salasLista.innerHTML = ''; // Limpa a lista antes de adicionar as salas filtradas
             snapshot.forEach(doc => {
                 const sala = doc.data();
                 if (sala.nomeSala.toLowerCase().includes(termoBusca)) {
@@ -173,10 +207,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     li.textContent = sala.nomeSala;
                     li.setAttribute('data-id', doc.id);
                     li.addEventListener('click', () => entrarNaSala(doc.id));
-                    salasLista.appendChild(li);
+
+                    // Adicionar botão de exclusão à sala filtrada, somente se o usuário for o criador
+                    const user = auth.currentUser;
+                    if (user && sala.criadoPor === user.uid) {
+                        const deleteButton = document.createElement('button');
+                        deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
+                        deleteButton.classList.add('delete-btn');
+                        deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
+                        li.appendChild(deleteButton);
+                    }
+
+                    salasLista.appendChild(li);   // Adiciona a sala à lista de salas
                 }
             });
         });
     });
 });
-

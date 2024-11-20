@@ -366,7 +366,18 @@ form{
 }
 
 
+#excluirSalaButton {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
+#excluirSalaButton:hover {
+    background-color: darkred;
+}
 
 /* Layout responsivo */
 @media (max-width: 840px) {
