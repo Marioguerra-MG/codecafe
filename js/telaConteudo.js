@@ -32,7 +32,7 @@ const menuMobile = document.querySelector('.menuMobile');
 // Variável global para armazenar o ID da sala atual
 let salaIdAtual = null;
 
-// Exibir nome do usuário autenticado
+// Exibir nome do usuário autenticado e gerenciar classes do menu mobile
 auth.onAuthStateChanged(user => {
     if (user) {
         nomePerfil.textContent = user.displayName || 'Usuário';
@@ -70,6 +70,14 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
         li.textContent = sala.nomeSala;
         li.setAttribute('data-id', doc.id); // Define o ID como atributo
         li.addEventListener('click', () => entrarNaSala(doc.id));
+        
+        // Adicionar ícone de exclusão à sala
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
+        deleteButton.classList.add('delete-btn');
+        deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
+        li.appendChild(deleteButton);
+        
         salasLista.appendChild(li);
     });
 });
@@ -104,7 +112,7 @@ function entrarNaSala(salaId) {
             // Botão de exclusão para mensagens do usuário atual
             if (auth.currentUser && data.usuario === auth.currentUser.displayName) {
                 const deleteButton = document.createElement('button');
-                deleteButton.innerHTML = '&#10006;';
+                deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
                 deleteButton.classList.add('delete-btn');
                 deleteButton.addEventListener('click', () => excluirMensagem(doc.id));
                 li.appendChild(deleteButton);
@@ -122,6 +130,18 @@ async function excluirMensagem(mensagemId) {
             await deleteDoc(doc(db, 'salas', salaIdAtual, 'mensagens', mensagemId));
         } catch (error) {
             console.error("Erro ao excluir a mensagem:", error);
+        }
+    }
+}
+
+// Função para excluir sala
+async function excluirSala(salaId, event) {
+    event.stopPropagation();  // Evitar que o click no botão de excluir dispare o clique da sala
+    if (confirm("Tem certeza que deseja excluir esta sala?")) {
+        try {
+            await deleteDoc(doc(db, 'salas', salaId));
+        } catch (error) {
+            console.error("Erro ao excluir a sala:", error);
         }
     }
 }
@@ -163,3 +183,4 @@ logoutButton.addEventListener('click', () => {
 btnMobile.addEventListener('click', () => {
     menuMobile.classList.toggle('ativo');
 });
+
