@@ -26,38 +26,16 @@ const salasLista = document.getElementById('salas-lista');
 const nomeComunidade = document.getElementById('nomeComunidade');
 const logoutButton = document.getElementById('logoutButton');
 const addComunidades = document.getElementById('addComunidades');
-const btnMobile = document.getElementById('btnMobile');
-const menuMobile = document.querySelector('.menuMobile');
 
 // Variável global para armazenar o ID da sala atual
 let salaIdAtual = null;
 
-// Exibir nome do usuário autenticado e gerenciar classes do menu mobile
+// Exibir nome do usuário autenticado
 auth.onAuthStateChanged(user => {
     if (user) {
         nomePerfil.textContent = user.displayName || 'Usuário';
-        
-        // Adicionar classe ao menu mobile
-        const usernameClass = user.displayName ? user.displayName.replace(/\s+/g, '-').toLowerCase() : 'usuario';
-        
-        // Remove classes antigas que começam com 'user-'
-        menuMobile.classList.forEach(cls => {
-            if (cls.startsWith('user-')) {
-                menuMobile.classList.remove(cls);
-            }
-        });
-        
-        // Adiciona a nova classe com o nome do usuário
-        menuMobile.classList.add(`user-${usernameClass}`);
     } else {
         nomePerfil.textContent = 'Olá, visitante';
-        
-        // Remove quaisquer classes relacionadas ao usuário
-        menuMobile.classList.forEach(cls => {
-            if (cls.startsWith('user-')) {
-                menuMobile.classList.remove(cls);
-            }
-        });
     }
 });
 
@@ -178,9 +156,3 @@ logoutButton.addEventListener('click', () => {
         console.error('Erro ao fazer logout:', error);
     });
 });
-
-// Controle do menu mobile
-btnMobile.addEventListener('click', () => {
-    menuMobile.classList.toggle('ativo');
-});
-
