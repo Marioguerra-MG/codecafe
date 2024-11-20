@@ -156,3 +156,27 @@ logoutButton.addEventListener('click', () => {
         console.error('Erro ao fazer logout:', error);
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const inputComunidades = document.getElementById('procurar');
+    const salasLista = document.getElementById('salas-lista');
+
+    // Função para filtrar comunidades em tempo real
+    inputComunidades.addEventListener('input', () => {
+        const termoBusca = inputComunidades.value.toLowerCase();
+        onSnapshot(collection(db, 'salas'), (snapshot) => {
+            salasLista.innerHTML = ''; // Limpa a lista
+            snapshot.forEach(doc => {
+                const sala = doc.data();
+                if (sala.nomeSala.toLowerCase().includes(termoBusca)) {
+                    const li = document.createElement('li');
+                    li.textContent = sala.nomeSala;
+                    li.setAttribute('data-id', doc.id);
+                    li.addEventListener('click', () => entrarNaSala(doc.id));
+                    salasLista.appendChild(li);
+                }
+            });
+        });
+    });
+});
+

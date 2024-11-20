@@ -74,7 +74,6 @@ body {
 }
 
 #procurar:hover {
-    background-color: #00695c;
     color: white;
 } 
 
@@ -179,6 +178,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    padding: 8px;
 }
 
 #nomeComunidade {
@@ -329,6 +329,42 @@ form{
 #minhaComunidades{
     width: 150px;
 }
+
+/* Estilo para o container */
+.input-containerIconeProcurar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: 100%;
+    max-width: 300px; /* Ajuste conforme necessário */
+}
+
+.input-containerIconeProcurar input {
+    width: 100%;
+    padding: 10px 10px 10px 60px; /* Aumenta o espaço à esquerda para descolar o ícone */
+    padding-right: 10px; /* Espaço à direita do input */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.input-containerIconeProcurar #iconeProcurar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px; /* Tamanho do ícone */
+    color: #fff; /* Cor do ícone */
+    background-color: #00796b; /* Cor de fundo do ícone */
+    width:38px; /* Define a largura do ícone */
+    height: 38px; /* Define a altura do ícone */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    pointer-events: none; /* Impede que o ícone interfira na interação do input */
+}
+
 
 
 
