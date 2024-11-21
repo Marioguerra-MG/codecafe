@@ -24,13 +24,13 @@ header{
 }
 
 #voltarIinicio{
-    color: #a64bed;
+    color: #00695c;
 }
 
 #logoTextoCadastro{
     font-size: 50px;
     font-weight: 500;
-    color: #a64bed;
+    color: #00695c;
 }
 
 .conteudoCadastror{
@@ -48,7 +48,7 @@ header{
 }
 
 #tituloCadastrar{
-    color: #a64bed;
+    color: #00695c;
     font-weight: 600;
 }
 
@@ -89,13 +89,13 @@ header{
 }
 
 .conteudoDados input:focus {
-    border-color: #925af8;
-    box-shadow: 0px 0px 5px rgba(146, 90, 248, 0.5);
+    border-color: #00695c;
+    box-shadow: 0px 0px 5px rgba(0, 136, 95, 0.5);
 }
 
 label{
     font-size: 15px;
-    color: #5c05ff;
+    color: #00695c;
 }
 
 #btnCadastrar{
@@ -103,7 +103,7 @@ label{
     height: 50px;
     border-radius: 8px;
     border: none;
-    background-color: #5c05ff;
+    background-color: #00695c;
     cursor: pointer;
     color: white;
     font-size: 25px;
@@ -112,7 +112,7 @@ label{
 }
 
 #btnCadastrar:hover{
-    background-color: #4900cf;
+    background-color: #029b89;
 
 }
 

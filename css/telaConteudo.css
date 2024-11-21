@@ -74,7 +74,7 @@ body {
 }
 
 #procurar:hover {
-    color: white;
+    color: #00695c;
 } 
 
 
@@ -337,6 +337,7 @@ form{
     position: relative;
     width: 100%;
     max-width: 300px; /* Ajuste conforme necessário */
+    color: #00796b;
 }
 
 .input-containerIconeProcurar input {
@@ -347,14 +348,16 @@ form{
     border-radius: 5px;
     font-size: 16px;
     text-align: center;
+    outline: none;
+    color: #00796b;
+    
 }
 
 .input-containerIconeProcurar #iconeProcurar {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px; /* Tamanho do ícone */
-    color: #fff; /* Cor do ícone */
+    font-size: 20px; /* Tamanho do ícone */ 
     background-color: #00796b; /* Cor de fundo do ícone */
     width:38px; /* Define a largura do ícone */
     height: 38px; /* Define a altura do ícone */
@@ -362,7 +365,8 @@ form{
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    pointer-events: none; /* Impede que o ícone interfira na interação do input */
+    pointer-events: none;
+    color: white; /* Impede que o ícone interfira na interação do input */
 }
 
 

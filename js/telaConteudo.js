@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -48,7 +48,7 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
         li.textContent = sala.nomeSala;
         li.setAttribute('data-id', doc.id); // Define o ID como atributo
         li.addEventListener('click', () => entrarNaSala(doc.id));
-        
+
         // Verificar se o usuário autenticado é o criador da sala
         const user = auth.currentUser;
         if (user && sala.criadoPor === user.uid) {
@@ -91,8 +91,9 @@ function entrarNaSala(salaId) {
     // Exibir campo de envio de mensagens
     document.getElementById('CampoConversa').style.display = 'block';
 
-    // Exibir as mensagens em tempo real
-    onSnapshot(collection(db, 'salas', salaId, 'mensagens'), (snapshot) => {
+    // Exibir as mensagens em tempo real, ordenadas pela data de envio (do mais recente para o mais antigo)
+    const mensagensQuery = query(collection(db, 'salas', salaId, 'mensagens'), orderBy('criadoEm', 'desc'));
+    onSnapshot(mensagensQuery, (snapshot) => {
         tarefaLista.innerHTML = ''; // Limpa as mensagens antes de atualizar
         snapshot.forEach(doc => {
             const data = doc.data();
@@ -126,7 +127,7 @@ async function excluirMensagem(mensagemId) {
 
 // Função para excluir sala
 async function excluirSala(salaId, event) {
-    event.stopPropagation();  // Evitar que o click no botão de excluir dispare o clique da sala
+    event.stopPropagation();  // Impede que o clique na exclusão acione a navegação na sala
 
     const user = auth.currentUser;
     if (!user) {
@@ -170,7 +171,7 @@ form.addEventListener('submit', async (e) => {
             await addDoc(collection(db, 'salas', salaIdAtual, 'mensagens'), {
                 mensagem: mensagem,
                 usuario: user.displayName,
-                criadoEm: new Date()
+                criadoEm: new Date() // Adiciona a data de criação para ordenação
             });
             campoConversa.value = ''; // Limpa o campo
         } catch (error) {
@@ -195,30 +196,36 @@ logoutButton.addEventListener('click', () => {
 // Função para filtrar comunidades em tempo real
 document.addEventListener('DOMContentLoaded', () => {
     const inputComunidades = document.getElementById('procurar');
-
+    
     inputComunidades.addEventListener('input', () => {
         const termoBusca = inputComunidades.value.toLowerCase();
+
+        // Obter as salas da coleção 'salas'
         onSnapshot(collection(db, 'salas'), (snapshot) => {
             salasLista.innerHTML = ''; // Limpa a lista antes de adicionar as salas filtradas
-            snapshot.forEach(doc => {
+
+            snapshot.forEach(async (doc) => {
                 const sala = doc.data();
+
+                // Verificar se a sala corresponde ao termo de busca
                 if (sala.nomeSala.toLowerCase().includes(termoBusca)) {
                     const li = document.createElement('li');
                     li.textContent = sala.nomeSala;
                     li.setAttribute('data-id', doc.id);
                     li.addEventListener('click', () => entrarNaSala(doc.id));
 
-                    // Adicionar botão de exclusão à sala filtrada, somente se o usuário for o criador
+                    // Verificar se o usuário autenticado é o criador da sala
                     const user = auth.currentUser;
                     if (user && sala.criadoPor === user.uid) {
+                        // Adicionar ícone de exclusão à sala se for o criador
                         const deleteButton = document.createElement('button');
                         deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
                         deleteButton.classList.add('delete-btn');
-                        deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
-                        li.appendChild(deleteButton);
+                        deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e)); // Passar o evento aqui para evitar propagação
+                        li.appendChild(deleteButton); // Adiciona o botão de exclusão à lista
                     }
 
-                    salasLista.appendChild(li);   // Adiciona a sala à lista de salas
+                    salasLista.appendChild(li);
                 }
             });
         });

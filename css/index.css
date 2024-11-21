@@ -7,6 +7,7 @@
     font-family: "Poppins", sans-serif;
     font-weight: 300;
     font-style: normal;
+    color: #00695c;
 }
 
 body{
@@ -17,6 +18,7 @@ body{
     justify-content: center;
     flex-direction: column;
     background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+    
 }
 
 .conteudoLoginCadastar {
@@ -46,7 +48,7 @@ body{
 #logoTexto {
     font-size: 50px;
     font-weight: 500;
-    color: white;
+    color: #00695c;
 }
 
 .LoginCadastar {
@@ -69,7 +71,7 @@ body{
 }
 
 .saudacoes h1 {
-    color: #a64bed;
+    color: #00695c;
     font-size: 35px;
 }
 
@@ -88,21 +90,21 @@ input {
     font-size: 16px;
     outline: none;
     border: none;
-    border-bottom: 2px solid #a64bed;
+    border-bottom: 2px solid #00695c;
     padding: 5px;
     color: rgb(150, 150, 150);
     transition: border-color 0.3s ease;
 }
 
 input:focus {
-    border-bottom: 2px solid #5c05ff;
+    border-bottom: 2px solid #00443c;
 }
 
 .dadosDeLogin button {
     width: 100%;
     height: 50px;
     border: none;
-    background-color: #5c05ff;
+    background-color: #00695c;
     font-weight: 500;
     border-radius: 5px;
     color: white;
@@ -112,7 +114,7 @@ input:focus {
 }
 
 .dadosDeLogin button:hover {
-    background-color: #4b04d4;
+    background-color: #00443c;
 }
 
 .criarContaSenha {
@@ -125,14 +127,14 @@ input:focus {
 
 .criarContaSenha a {
     text-decoration: none;
-    color: #5c05ff;
+    color: #00695c;
     font-size: 14px;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
 .criarContaSenha a:hover {
-    color: #4b04d4;
+    color: #03a18f;
 }
 
 @media (max-width: 1045px) {
