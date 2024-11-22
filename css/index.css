@@ -136,10 +136,23 @@ input:focus {
 .criarContaSenha a:hover {
     color: #03a18f;
 }
+/* Estilizando o botão de olho */
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+
 
 @media (max-width: 1045px) {
     .conteudoLoginCadastar {
         width: 90%;
+        height: 90%;
+    }
+
+    .LoginCadastar{
+        width: 40%;
+        height: 30%;
     }
 
     input {
@@ -149,7 +162,6 @@ input:focus {
 
 @media (max-width: 834px) {
     .conteudoLoginCadastar {
-        height: 80%;
         flex-direction: column;
     }
 

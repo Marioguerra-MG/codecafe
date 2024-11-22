@@ -32,3 +32,5 @@ document.getElementById('entrar').addEventListener('click', async () => {
         console.error("Erro ao fazer login: ", error);
     }
 });
+
+

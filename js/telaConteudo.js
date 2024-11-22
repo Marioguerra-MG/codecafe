@@ -97,13 +97,26 @@ function entrarNaSala(salaId) {
         tarefaLista.innerHTML = ''; // Limpa as mensagens antes de atualizar
         snapshot.forEach(doc => {
             const data = doc.data();
+
             const li = document.createElement('li');
-            li.textContent = `${data.usuario}: ${data.mensagem}`;
+            const nomeUsuario = document.createElement('span');
+            const mensagem = document.createElement('span');
+
+            // Nome do usuário com estilo azul
+            nomeUsuario.textContent = `${data.usuario}: `;
+            nomeUsuario.style.color = 'blue';
+            nomeUsuario.style.fontWeight = 'bold';
+
+            // Mensagem do usuário
+            mensagem.textContent = data.mensagem;
+
+            li.appendChild(nomeUsuario); // Adicionar o nome do usuário
+            li.appendChild(mensagem);   // Adicionar a mensagem
 
             // Botão de exclusão para mensagens do usuário atual
             if (auth.currentUser && data.usuario === auth.currentUser.displayName) {
                 const deleteButton = document.createElement('button');
-                deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
+                deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>'; // Ícone Font Awesome
                 deleteButton.classList.add('delete-btn');
                 deleteButton.addEventListener('click', () => excluirMensagem(doc.id));
                 li.appendChild(deleteButton);
@@ -193,10 +206,10 @@ logoutButton.addEventListener('click', () => {
     });
 });
 
-// Função para filtrar comunidades em tempo real
+// Filtrar comunidades em tempo real
 document.addEventListener('DOMContentLoaded', () => {
     const inputComunidades = document.getElementById('procurar');
-    
+
     inputComunidades.addEventListener('input', () => {
         const termoBusca = inputComunidades.value.toLowerCase();
 
@@ -217,12 +230,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Verificar se o usuário autenticado é o criador da sala
                     const user = auth.currentUser;
                     if (user && sala.criadoPor === user.uid) {
-                        // Adicionar ícone de exclusão à sala se for o criador
+                        // Adicionar ícone de exclusão à sala
                         const deleteButton = document.createElement('button');
                         deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
                         deleteButton.classList.add('delete-btn');
-                        deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e)); // Passar o evento aqui para evitar propagação
-                        li.appendChild(deleteButton); // Adiciona o botão de exclusão à lista
+                        deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
+                        li.appendChild(deleteButton);
                     }
 
                     salasLista.appendChild(li);
