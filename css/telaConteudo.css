@@ -388,6 +388,10 @@ form{
     font-weight: bold; /* Opcional */
 }
 
+#emojiCoracao, #emojiCurti, #emojiDescurti{
+    font-size: 28px;
+}
+
 /* Layout responsivo */
 @media (max-width: 840px) {
     body {
