@@ -13,7 +13,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+    /*background: linear-gradient(120deg, #a1c4fd, #c2e9fb);*/
+    background-color: #e0e0e0;
     gap: 10px;
 }
 
@@ -94,7 +95,8 @@ body {
     list-style: none;
     padding: 15px;
     margin: 10px 0;
-    background: #e0f7fa;
+    background: white;
+    /*background: #e0f7fa;*/
     border-radius: 12px;
     font-size: 16px;
     display: flex;
@@ -283,7 +285,7 @@ form{
     display: flex;
     flex-direction: column; /* Alinha a mensagem e o botão de deletar em coluna */
     justify-content: flex-start; /* Alinha o conteúdo para o início */
-    background-color: #defcd5;/* Cor de fundo para a mensagem */
+    background-color: #defcd5; /*Cor de fundo para a mensagem */
     color: black; /* Cor do texto */
     padding: 5px;
     border-radius: 8px;
@@ -392,6 +394,16 @@ form{
     font-size: 28px;
 }
 
+#numerosDeCurtidas{
+    font-size:12px;
+    color: #ccc;
+}
+
+#textoCurti{
+    font-size: 12px;
+    color: #ccc;
+}
+
 /* Layout responsivo */
 @media (max-width: 840px) {
     body {
@@ -489,7 +501,7 @@ form{
         display: flex;
         flex-direction: row;
         text-align: center;
-        background: #e0f7fa;
+        background: white;
         border-radius: 12px;
         font-size: 12px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
