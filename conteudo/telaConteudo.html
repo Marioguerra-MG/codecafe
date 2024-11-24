@@ -60,14 +60,13 @@
     </div>
 
     <div class="conteudoCorpo">
-        <div class="conteinerNomeComunidade">
-            <div class="logoNumeroCurtidas">
-                <h1 id="nomeComunidade">Floo</h1>
-                <h1 id="numerosDeCurtidas">0</h1>
+        <div class="conteinerNomeComunidade">  
+            <div class="logoNumeroCurtidas" class="sala" data-id="sala1">
+                <h1  id="nomeComunidade">Floo</h1>  
             </div>
             
             <div id="emojiArea">
-                <button id="emojiCurti" class="emoji" data-emoji="👍">👍</button>
+                <button id="emojiCurti" class="curti" data-emoji="👍">👍</button>
                 <p id="textoCurti">Curti</p>
             </div>
         </div>
@@ -83,33 +82,11 @@
         <ul id="tarefa-lista"></ul>
     </div>
     
-    
-    
-
-    <!-- Formulário de Adicionar Comunidade (invisível inicialmente)
-    <div id="addCommunityForm" style="display:none;">
-        <input type="text" id="communityName" placeholder="Nome da Comunidade">
-        <button id="createCommunityButton">Criar Comunidade</button>
-    </div>
-     -->
-
-
     <!-- Firebase e EmojiMart -->
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
     <script type="module" src="/js/telaConteudo.js"></script>
-
-    <script>
-        // Inserir emoji no campo de texto
-        const emojis = document.querySelectorAll('.emoji');
-        const campoConversa = document.getElementById('CampoConversa');
-
-        emojis.forEach(emoji => {
-            emoji.addEventListener('click', () => {
-                campoConversa.value += emoji.getAttribute('data-emoji'); // Adiciona o emoji ao campo de texto
-            });
-        });
-    </script>
+    <script src="/js/emojis.js"></script>
 </body>
 </html>

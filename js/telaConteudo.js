@@ -2,6 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebas
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
+import { updateDoc} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
 // Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAkDa1oHvAF3P8rRFFHNnJ11DRNXy7M3l8",
@@ -44,9 +46,33 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
     salasLista.innerHTML = ''; // Limpa a lista antes de atualizar
     snapshot.forEach(async (doc) => {
         const sala = doc.data();
+
         const li = document.createElement('li');
-        li.textContent = sala.nomeSala;
         li.setAttribute('data-id', doc.id); // Define o ID como atributo
+        li.classList.add('sala-item'); // Classe para o item de sala
+
+        // Criar container para o nome da comunidade
+        const containerNome = document.createElement('div');
+        containerNome.classList.add('container-nome');
+
+        const nomeSala = document.createElement('h2');
+        nomeSala.textContent = sala.nomeSala; // Nome da sala
+        containerNome.appendChild(nomeSala);
+
+        li.appendChild(containerNome);
+
+        // Criar container para as curtidas
+        const containerCurtidas = document.createElement('div');
+        containerCurtidas.classList.add('container-curtidas');
+
+        const numeroCurtidas = document.createElement('h3');
+        numeroCurtidas.classList.add('numeroCurtidas');
+        numeroCurtidas.textContent = `Curtidas: ${sala.curtidas}`;
+        containerCurtidas.appendChild(numeroCurtidas);
+
+        li.appendChild(containerCurtidas);
+
+        // Adicionar funcionalidade para entrar na sala ao clicar
         li.addEventListener('click', () => entrarNaSala(doc.id));
 
         // Verificar se o usuário autenticado é o criador da sala
@@ -54,15 +80,20 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
         if (user && sala.criadoPor === user.uid) {
             // Adicionar ícone de exclusão à sala se for o criador
             const deleteButton = document.createElement('button');
-            deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
+            deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>'; // Ícone Font Awesome
             deleteButton.classList.add('delete-btn');
             deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
             li.appendChild(deleteButton);
         }
 
+        // Adicionar o item da sala à lista
         salasLista.appendChild(li);
     });
 });
+
+
+
+
 
 // Criar uma nova sala de chat
 addComunidades.addEventListener('click', async () => {
@@ -72,7 +103,8 @@ addComunidades.addEventListener('click', async () => {
         try {
             await addDoc(collection(db, 'salas'), {
                 nomeSala: nomeSala,
-                criadoPor: user.uid // Adiciona o UID do usuário
+                criadoPor: user.uid, // Adiciona o UID do usuário
+                curtidas: 0  // Inicializa o número de curtidas com 0 ///////////////////////
             });
         } catch (error) {
             console.error("Erro ao criar a sala:", error);
@@ -223,10 +255,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Verificar se a sala corresponde ao termo de busca
                 if (sala.nomeSala.toLowerCase().includes(termoBusca)) {
                     const li = document.createElement('li');
-                    li.textContent = sala.nomeSala;
                     li.setAttribute('data-id', doc.id);
+                    li.classList.add('sala-item'); // Classe para o item de sala
+
+                    // Criar a estrutura do item da sala
+                    const nomeSala = document.createElement('h2');
+                    nomeSala.textContent = sala.nomeSala; // Nome da sala
+                    li.appendChild(nomeSala);
+
+                    // Adicionar número de curtidas abaixo do nome da sala
+                    const numeroCurtidas = document.createElement('h3');
+                    numeroCurtidas.textContent = `Curtidas: ${sala.curtidas}`;
+                    li.appendChild(numeroCurtidas);
+
                     li.addEventListener('click', () => entrarNaSala(doc.id));
 
+                    //////////////////////////////////////////////
                     // Verificar se o usuário autenticado é o criador da sala
                     const user = auth.currentUser;
                     if (user && sala.criadoPor === user.uid) {
@@ -244,3 +288,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
