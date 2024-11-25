@@ -577,10 +577,12 @@ form{
         display: flex;
         align-items: flex-start;
         justify-content: flex-start; /* Ajuste de alinhamento */
-        flex-wrap: wrap; /* Permite que os itens se ajustem em várias linhas */
-        gap:2px; /* Espaçamento uniforme entre os itens */
+        gap: 2px; /* Espaçamento uniforme entre os itens */
         padding: 0px;
-        
+        flex-direction: row;
+        overflow: auto;
+        overflow-x: auto;
+        max-width: 100%;
     }
     
     #salas-lista li {
@@ -596,9 +598,10 @@ form{
         cursor: pointer;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         width: 180px; /* Largura fixa para uniformidade */
-        height: 90px; /* Altura fixa para uniformidade */
+        aspect-ratio: 2 / 1; /* Mantém a proporção entre a largura e a altura */
         padding: 0px;
     }
+    
     
     #salas-lista li:hover {
         background: #e0f7fa; /* Cor de destaque ao passar o mouse */
