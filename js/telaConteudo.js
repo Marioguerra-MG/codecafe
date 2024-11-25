@@ -41,6 +41,15 @@ auth.onAuthStateChanged(user => {
     }
 });
 
+// Função para formatar números grandes (ex: 1000 -> 1k, 1500 -> 1.5k)
+// Função para formatar números grandes (ex: 1000 -> 1k, 1500 -> 1.5k)
+function formatNumber(number) {
+    if (number >= 1000) {
+        return (number / 1000).toFixed(1) + 'k'; // Divide por 1000 e adiciona 'k'
+    }
+    return number.toString(); // Caso o número seja menor que 1000, exibe o número normal
+}
+
 // Exibir salas de chat em tempo real
 onSnapshot(collection(db, 'salas'), (snapshot) => {
     salasLista.innerHTML = ''; // Limpa a lista antes de atualizar
@@ -57,10 +66,14 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
 
         // Adicionar número de curtidas abaixo do nome da sala
         const numeroCurtidas = document.createElement('h3');
-        numeroCurtidas.textContent = `Curtidas: ${sala.curtidas}`;
+        numeroCurtidas.classList.add('numeroCurtidas'); // Classe para facilitar a manipulação do elemento
+        numeroCurtidas.textContent = `Curtidas: ${formatNumber(sala.curtidas)}`; // Formatar o número de curtidas
         li.appendChild(numeroCurtidas);
 
-        li.addEventListener('click', () => entrarNaSala(doc.id));
+        li.addEventListener('click', () => {
+            salaIdAtual = doc.id; // Atualiza a salaIdAtual com o ID da sala clicada
+            entrarNaSala(doc.id);
+        });
 
         //////////////////////////////////////////////
         // Verificar se o usuário autenticado é o criador da sala
@@ -77,7 +90,6 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
         salasLista.appendChild(li);
     });
 });
-
 
 let curtiu = false; // Estado local para verificar se o usuário já curtiu
 
@@ -104,18 +116,15 @@ document.getElementById('emojiCurti').addEventListener('click', async () => {
         if (!usuariosCurtiram.includes(userId)) {
             // Incrementa as curtidas e adiciona o usuário ao array
             await updateDoc(salaRef, {
-                curtidas: salaData.curtidas + 1,
+                curtidas: salaData.curtidas + 1, // Incrementa uma curtida
                 usuariosCurtiram: [...usuariosCurtiram, userId]
             });
-
-            curtiu = true; // Marca que o usuário curtiu (local)
         } else {
             alert("Você já curtiu esta sala.");
         }
     }
-
-    
 });
+
 
 // Atualizar o número de curtidas na interface em tempo real
 onSnapshot(collection(db, 'salas'), (snapshot) => {
@@ -126,7 +135,8 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
         if (salaElement) {
             const numeroCurtidas = salaElement.querySelector('.numeroCurtidas');
             if (numeroCurtidas) {
-                numeroCurtidas.textContent = `Curtidas: ${sala.curtidas}`; // Atualiza o número de curtidas
+                // Formatar o número de curtidas
+                numeroCurtidas.textContent = `Curtidas: ${formatNumber(sala.curtidas)}`;
             }
         }
     });
@@ -157,8 +167,13 @@ addComunidades.addEventListener('click', async () => {
 // Função para o usuário entrar na sala
 function entrarNaSala(salaId) {
     const salaElement = salasLista.querySelector(`[data-id="${salaId}"]`);
-    const nomeSala = salaElement ? salaElement.textContent : 'Sala não encontrada';
+    //const nomeSala = salaElement ? salaElement.textContent : 'Sala não encontrada';
+    const nomeSala = salaElement ? salaElement.querySelector('h2:first-of-type').textContent : 'Sala não encontrada';
+
     nomeComunidade.textContent = nomeSala;
+    
+
+
     salaIdAtual = salaId;
 
     // Exibir campo de envio de mensagens
@@ -279,6 +294,8 @@ logoutButton.addEventListener('click', () => {
     });
 });
 
+
+
 // Filtrar comunidades em tempo real
 document.addEventListener('DOMContentLoaded', () => {
     const inputComunidades = document.getElementById('procurar');
@@ -297,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (sala.nomeSala.toLowerCase().includes(termoBusca)) {
                     const li = document.createElement('li');
                     li.setAttribute('data-id', doc.id);
-                    li.classList.add('sala-item'); // Classe para o item de sala
+                    li.classList.add('sala-item'); // Classe para o item da sala
 
                     // Criar a estrutura do item da sala
                     const nomeSala = document.createElement('h2');
@@ -306,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Adicionar número de curtidas abaixo do nome da sala
                     const numeroCurtidas = document.createElement('h3');
-                    numeroCurtidas.textContent = `Curtidas: ${sala.curtidas}`;
+                    numeroCurtidas.textContent = `Curtidas: ${formatNumber(sala.curtidas)}`; // Formatar o número de curtidas
                     li.appendChild(numeroCurtidas);
 
                     li.addEventListener('click', () => entrarNaSala(doc.id));
@@ -326,7 +343,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     salasLista.appendChild(li);
                 }
             });
+        
         });
     });
 });
+
 
