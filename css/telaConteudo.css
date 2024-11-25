@@ -538,7 +538,7 @@ form{
     /* Ajuste do campo de conversa */
     .conteudoCorpo {
         width: 97%;
-        height: 60%;
+        height: 70%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -546,6 +546,7 @@ form{
         border-radius: 12px;
         padding: 0;  /* Remove padding */
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 5px;
     }
 
     /* Ajustando largura do Campo de Conversa */
@@ -572,38 +573,51 @@ form{
         display: none;
     }
 
-    /* Ajustes nas comunidades - Exibir em linha */
     #salas-lista {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-direction: row; 
-        width: 100%;
-        overflow-y: auto;
-        gap: 10px; 
+        align-items: flex-start;
+        justify-content: flex-start; /* Ajuste de alinhamento */
+        flex-wrap: wrap; /* Permite que os itens se ajustem em várias linhas */
+        gap:2px; /* Espaçamento uniforme entre os itens */
+        padding: 0px;
+        
     }
-
+    
     #salas-lista li {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-align: center;
-        background: white;
+        background: linear-gradient(135deg, #ffffff, #f1f8f7); /* Gradiente moderno */
         border-radius: 12px;
-        font-size: 12px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        font-size: 12px; /* Melhor legibilidade */
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Sombra moderna */
         cursor: pointer;
-        transition: 0.3s ease;
-        max-width: 95%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 180px; /* Largura fixa para uniformidade */
+        height: 90px; /* Altura fixa para uniformidade */
+        padding: 0px;
     }
-
+    
     #salas-lista li:hover {
-        background: #b2ebf2;
-        transform: translateY(-5px);
+        background: #e0f7fa; /* Cor de destaque ao passar o mouse */
+        transform: translateY(-8px) scale(1.05); /* Efeito moderno de destaque */
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
     }
-
+    
     #salas-lista li .delete-btn {
         font-size: 18px;
+        color: #d32f2f;
+        margin-top: auto; /* Empurra o botão para baixo */
+        cursor: pointer;
     }
+    
+    #salas-lista li .delete-btn:hover {
+        color: #b71c1c;
+        transform: scale(1.2); /* Destaque ao passar o mouse */
+    }
+    
 
     /* Ajustes no layout do conteúdo de perfil e comunidades */
     .conteudoPerfil {
@@ -615,18 +629,17 @@ form{
         height: 100px; 
         margin-top: 0; 
         padding: 5px;  /* Remove padding */
-        gap: 15px;
+        height: auto;
     }
 
     .amigos {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: start;
         overflow: auto;
         scrollbar-width: none; 
         align-items: center;
-        margin-top: 10px;
-
+        height: auto;
     }
     
     .amigos::-webkit-scrollbar {
@@ -646,6 +659,8 @@ form{
         gap: 0;  /* Remove o gap */
         margin: 0;  /* Remove a margem */
     }
+
+ 
 
 }
 

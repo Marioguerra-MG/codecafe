@@ -46,50 +46,92 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
     salasLista.innerHTML = ''; // Limpa a lista antes de atualizar
     snapshot.forEach(async (doc) => {
         const sala = doc.data();
-
         const li = document.createElement('li');
         li.setAttribute('data-id', doc.id); // Define o ID como atributo
         li.classList.add('sala-item'); // Classe para o item de sala
 
-        // Criar container para o nome da comunidade
-        const containerNome = document.createElement('div');
-        containerNome.classList.add('container-nome');
-
+        // Criar a estrutura do item da sala
         const nomeSala = document.createElement('h2');
         nomeSala.textContent = sala.nomeSala; // Nome da sala
-        containerNome.appendChild(nomeSala);
+        li.appendChild(nomeSala);
 
-        li.appendChild(containerNome);
-
-        // Criar container para as curtidas
-        const containerCurtidas = document.createElement('div');
-        containerCurtidas.classList.add('container-curtidas');
-
+        // Adicionar número de curtidas abaixo do nome da sala
         const numeroCurtidas = document.createElement('h3');
-        numeroCurtidas.classList.add('numeroCurtidas');
         numeroCurtidas.textContent = `Curtidas: ${sala.curtidas}`;
-        containerCurtidas.appendChild(numeroCurtidas);
+        li.appendChild(numeroCurtidas);
 
-        li.appendChild(containerCurtidas);
-
-        // Adicionar funcionalidade para entrar na sala ao clicar
         li.addEventListener('click', () => entrarNaSala(doc.id));
 
+        //////////////////////////////////////////////
         // Verificar se o usuário autenticado é o criador da sala
         const user = auth.currentUser;
         if (user && sala.criadoPor === user.uid) {
             // Adicionar ícone de exclusão à sala se for o criador
             const deleteButton = document.createElement('button');
-            deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>'; // Ícone Font Awesome
+            deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
             deleteButton.classList.add('delete-btn');
             deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
             li.appendChild(deleteButton);
         }
 
-        // Adicionar o item da sala à lista
         salasLista.appendChild(li);
     });
 });
+
+
+let curtiu = false; // Estado local para verificar se o usuário já curtiu
+
+// Função para curtir uma sala
+document.getElementById('emojiCurti').addEventListener('click', async () => {
+    const salaId = salaIdAtual; // ID da sala atual
+
+    if (!salaId) return; // Se não houver uma sala selecionada, não faz nada
+
+    const salaRef = doc(db, 'salas', salaId);
+    const salaSnap = await getDoc(salaRef);
+
+    if (salaSnap.exists()) {
+        const salaData = salaSnap.data();
+        const userId = auth.currentUser?.uid; // UID do usuário logado
+
+        if (!userId) {
+            alert("Você precisa estar logado para curtir!");
+            return;
+        }
+
+        // Verificar se o usuário já curtiu
+        const usuariosCurtiram = salaData.usuariosCurtiram || [];
+        if (!usuariosCurtiram.includes(userId)) {
+            // Incrementa as curtidas e adiciona o usuário ao array
+            await updateDoc(salaRef, {
+                curtidas: salaData.curtidas + 1,
+                usuariosCurtiram: [...usuariosCurtiram, userId]
+            });
+
+            curtiu = true; // Marca que o usuário curtiu (local)
+        } else {
+            alert("Você já curtiu esta sala.");
+        }
+    }
+
+    
+});
+
+// Atualizar o número de curtidas na interface em tempo real
+onSnapshot(collection(db, 'salas'), (snapshot) => {
+    snapshot.forEach(doc => {
+        const sala = doc.data();
+        const salaElement = salasLista.querySelector(`[data-id="${doc.id}"]`); // Pega o elemento da sala correspondente
+
+        if (salaElement) {
+            const numeroCurtidas = salaElement.querySelector('.numeroCurtidas');
+            if (numeroCurtidas) {
+                numeroCurtidas.textContent = `Curtidas: ${sala.curtidas}`; // Atualiza o número de curtidas
+            }
+        }
+    });
+});
+
 
 
 
@@ -117,7 +159,6 @@ function entrarNaSala(salaId) {
     const salaElement = salasLista.querySelector(`[data-id="${salaId}"]`);
     const nomeSala = salaElement ? salaElement.textContent : 'Sala não encontrada';
     nomeComunidade.textContent = nomeSala;
-
     salaIdAtual = salaId;
 
     // Exibir campo de envio de mensagens
