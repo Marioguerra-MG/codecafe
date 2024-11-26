@@ -7,3 +7,8 @@ emojis.forEach(emoji => {
         campoConversa.value += emoji.getAttribute('data-emoji'); // Adiciona o emoji ao campo de texto
     });
 });
+
+
+
+
+

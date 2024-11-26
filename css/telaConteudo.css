@@ -60,13 +60,14 @@ body {
 
 #addComunidades,  #procurar, #minhaComunidades{
     cursor: pointer;
-    font-size: 12px;
+    font-size: 10px;
     color: #00695c;
     border: 2px solid #00695c;
     padding: 10px;
     border-radius: 8px;
     background-color: #ffffff;
     transition: 0.3s ease;
+    
 }
 
 #addComunidades:hover {
@@ -83,6 +84,20 @@ body {
 #minhaComunidades:hover {
     background-color: #00695c;
     color: white;
+}
+
+#minhaComunidades.ativo {
+    background-color: #00695c; /* Cor de fundo ativa */
+    color: #fff; /* Cor do texto ativa */
+    border: 2px solid #fcff2f;
+}
+
+#minhaComunidades i {
+    transition: color 0.3s;
+}
+
+#minhaComunidades.ativo i {
+    color: #fcff2f;
 }
 
 #salas-lista{
@@ -414,7 +429,7 @@ form{
 }
 
 #minhaComunidades{
-    width: 150px;
+    width: 50px;
 }
 
 /* Estilo para o container */

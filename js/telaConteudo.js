@@ -149,7 +149,7 @@ onSnapshot(collection(db, 'salas'), (snapshot) => {
 
 // Criar uma nova sala de chat
 addComunidades.addEventListener('click', async () => {
-    const nomeSala = prompt("Digite o nome da nova sala:");
+    const nomeSala = prompt("Digite o nome da Comunidade:");
     const user = auth.currentUser;
     if (nomeSala && user) {
         try {
@@ -159,7 +159,7 @@ addComunidades.addEventListener('click', async () => {
                 curtidas: 0  // Inicializa o número de curtidas com 0 ///////////////////////
             });
         } catch (error) {
-            console.error("Erro ao criar a sala:", error);
+            console.error("Erro ao criar a Comunidade:", error);
         }
     }
 });
@@ -168,7 +168,7 @@ addComunidades.addEventListener('click', async () => {
 function entrarNaSala(salaId) {
     const salaElement = salasLista.querySelector(`[data-id="${salaId}"]`);
     //const nomeSala = salaElement ? salaElement.textContent : 'Sala não encontrada';
-    const nomeSala = salaElement ? salaElement.querySelector('h2:first-of-type').textContent : 'Sala não encontrada';
+    const nomeSala = salaElement ? salaElement.querySelector('h2:first-of-type').textContent : 'Comunidade não encontrada';
 
     nomeComunidade.textContent = nomeSala;
     
@@ -232,7 +232,7 @@ async function excluirSala(salaId, event) {
 
     const user = auth.currentUser;
     if (!user) {
-        alert("Você precisa estar logado para excluir a sala.");
+        alert("Você precisa estar logado para excluir a Comunidade.");
         return;
     }
 
@@ -245,19 +245,19 @@ async function excluirSala(salaId, event) {
 
         // Verifica se o usuário é o criador da sala
         if (salaData.criadoPor === user.uid) {
-            if (confirm("Tem certeza que deseja excluir esta sala?")) {
+            if (confirm("Tem certeza que deseja excluir esta Comunidade?")) {
                 try {
                     await deleteDoc(salaRef);
-                    console.log("Sala excluída com sucesso!");
+                    console.log("Comunidade excluída com sucesso!");
                 } catch (error) {
-                    console.error("Erro ao excluir a sala:", error);
+                    console.error("Erro ao excluir a Comunidade:", error);
                 }
             }
         } else {
-            alert("Você não pode excluir uma sala que não criou.");
+            alert("Você não pode excluir uma Comunidade que não criou.");
         }
     } else {
-        console.error("Sala não encontrada.");
+        console.error("Comunidade não encontrada.");
     }
 }
 
@@ -279,7 +279,7 @@ form.addEventListener('submit', async (e) => {
             console.error("Erro ao enviar a mensagem:", error);
         }
     } else {
-        alert("Selecione uma sala para enviar a mensagem.");
+        alert("Selecione uma Comunidade para enviar a mensagem.");
     }
 });
 
@@ -296,12 +296,48 @@ logoutButton.addEventListener('click', () => {
 
 
 
-// Filtrar comunidades em tempo real
 document.addEventListener('DOMContentLoaded', () => {
     const inputComunidades = document.getElementById('procurar');
+    const btnMinhasComunidades = document.getElementById('minhaComunidades'); // Botão de alternância
+    let filtrarCriadasPorUsuario = false; // Controla o estado do filtro
 
-    inputComunidades.addEventListener('input', () => {
+    // Verifica se o botão existe antes de adicionar o evento
+    if (btnMinhasComunidades) {
+        // Alternar entre todas as salas e salas criadas pelo usuário
+        btnMinhasComunidades.addEventListener('click', (e) => {
+            e.stopPropagation(); // Impede que o clique no botão ou no ícone seja capturado pelo evento global
+            filtrarCriadasPorUsuario = !filtrarCriadasPorUsuario; // Alterna o estado do filtro
+
+            // Alterna a classe 'ativo' para mudar a aparência do botão
+            if (filtrarCriadasPorUsuario) {
+                btnMinhasComunidades.classList.add('ativo');
+            } else {
+                btnMinhasComunidades.classList.remove('ativo');
+            }
+
+            atualizarListaSalas(); // Atualiza a lista de salas
+        });
+    }
+
+    // Escutando eventos de input no campo de busca
+    inputComunidades.addEventListener('input', atualizarListaSalas);
+
+    // Evento global para cliques fora do botão e ícone
+    document.addEventListener('click', (e) => {
+        // Verifica se o clique não foi no botão nem no ícone
+        if (!btnMinhasComunidades.contains(e.target)) {
+            filtrarCriadasPorUsuario = false; // Reseta o estado do filtro
+            btnMinhasComunidades.classList.remove('ativo'); // Remove a classe 'ativo'
+            atualizarListaSalas(); // Atualiza a lista para mostrar todas as salas
+        }
+    });
+
+    // Função para atualizar a lista de salas com base no filtro e busca
+    function atualizarListaSalas() {
         const termoBusca = inputComunidades.value.toLowerCase();
+
+        // Obter o usuário autenticado
+        const user = auth.currentUser;
 
         // Obter as salas da coleção 'salas'
         onSnapshot(collection(db, 'salas'), (snapshot) => {
@@ -309,6 +345,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             snapshot.forEach(async (doc) => {
                 const sala = doc.data();
+
+                // Filtrar salas criadas pelo usuário, se necessário
+                if (filtrarCriadasPorUsuario && (!user || sala.criadoPor !== user.uid)) {
+                    return; // Ignora salas que não são do usuário autenticado
+                }
 
                 // Verificar se a sala corresponde ao termo de busca
                 if (sala.nomeSala.toLowerCase().includes(termoBusca)) {
@@ -328,13 +369,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     li.addEventListener('click', () => entrarNaSala(doc.id));
 
-                    //////////////////////////////////////////////
-                    // Verificar se o usuário autenticado é o criador da sala
-                    const user = auth.currentUser;
+                    // Se for uma sala criada pelo usuário autenticado, adicionar botão de exclusão
                     if (user && sala.criadoPor === user.uid) {
-                        // Adicionar ícone de exclusão à sala
                         const deleteButton = document.createElement('button');
-                        deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>';  // Ícone Font Awesome
+                        deleteButton.innerHTML = '<i class="fa-solid fa-delete-left"></i>'; // Ícone Font Awesome
                         deleteButton.classList.add('delete-btn');
                         deleteButton.addEventListener('click', (e) => excluirSala(doc.id, e));
                         li.appendChild(deleteButton);
@@ -343,9 +381,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     salasLista.appendChild(li);
                 }
             });
-        
         });
-    });
-});
+    }
 
+    // Inicializar a lista ao carregar a página
+    atualizarListaSalas();
+});
 
