@@ -595,8 +595,15 @@ form{
         padding: 0;  /* Remove padding */
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
         margin-top: 5px;
+        
     }
 
+    #tarefa-lista{
+        height: 65%;
+    }
+
+
+ 
     /* Ajustando largura do Campo de Conversa */
     #CampoConversa {
         width: 100%;
@@ -620,6 +627,8 @@ form{
     .emoticon {
         display: none;
     }
+
+   
 
     #salas-lista {
         display: flex;
