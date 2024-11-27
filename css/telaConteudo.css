@@ -325,7 +325,28 @@ form{
     background-color: #004d40;
 }
 
+.botoesInformativos{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
 #logoutButton{
+    width: 40px;
+    height:30px;
+    border-radius: 8px;
+    background-color: #00796b;
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size:12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#notificacoes, #editarPerfil{
     width: 40px;
     height:30px;
     border-radius: 8px;
