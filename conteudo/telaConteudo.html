@@ -9,16 +9,18 @@
 </head>
 <body>
 
+  
+
     <div class="informacoesUsuario">
         <div class="imgPerfil">
             <h1 id="nomePerfil">Olá!</h1>
             <div class="botoesInformativos">
-                <button id="notificacoes"><i class="fa-solid fa-envelope"></i></button>
+                <!--<button id="notificacoes"><i class="fa-solid fa-envelope"></i></button>-->
                 <button id="editarPerfil"><i class="fa-solid fa-gear"></i></button>
                 <button id="logoutButton">Sair</button>
             </div>
-        </div>
 
+        </div>
         <div class="emoticon">
             <div id="emojiContainer">
                 <!-- Emojis visíveis diretamente -->
@@ -67,7 +69,7 @@
     <div class="conteudoCorpo">
         <div class="conteinerNomeComunidade">  
             <div class="logoNumeroCurtidas" class="sala" data-id="sala1">
-                <h1 id="nomeComunidade">Floo</h1>       
+                <h1 id="nomeComunidade">Floo</h1>      
             </div>
             
             <div id="emojiArea">
@@ -86,6 +88,35 @@
         </form>
         <ul id="tarefa-lista"></ul>
     </div>
+
+
+    
+    <!-- O Modal -->
+<div id="meuModal" class="modal">
+    <!-- Conteúdo do Modal -->
+    <div class="modal-conteudo">
+      <span id="fecharModal" class="fechar">&times;</span>
+      
+            <!-- Formulário para alterar o e-mail e a senha -->
+    <div id="alterarDados">
+        <h3>Alterar Nome de Usuario</h3>
+        <input type="text" id="novoNome" placeholder="Digite o novo nome">
+        <button id="alterarNome">Alterar Nome</button>
+        <!--
+        <h3>Alterar E-mail</h3>
+        <input type="email" id="novoEmail" placeholder="Novo e-mail">
+        <input type="password" id="senhaAtualEmail" placeholder="Senha atual">
+        <button id="alterarEmailButton">Alterar E-mail</button>
+        -->
+
+        <h3>Alterar Senha</h3>
+        <input type="password" id="novaSenha" placeholder="Nova senha">
+        <input type="password" id="senhaAtualSenha" placeholder="Senha atual">
+        <button id="alterarSenhaButton">Alterar Senha</button>
+    </div>
+
+    </div>
+  </div>
     
     <!-- Firebase e EmojiMart -->
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
@@ -93,5 +124,6 @@
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
     <script type="module" src="/js/telaConteudo.js"></script>
     <script  type="module" src="/js/emojis.js"></script>
+    <script type="module" src="/js/redefinicoesEmailSenha.js"></script>
 </body>
 </html>

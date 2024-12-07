@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, getDoc, deleteDoc, doc, getDocs, orderBy, query, arrayUnion } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 import { updateDoc} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
@@ -388,3 +388,4 @@ document.addEventListener('DOMContentLoaded', () => {
     atualizarListaSalas();
 });
 
+////////////////////////////////////////////
